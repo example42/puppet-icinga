@@ -11,7 +11,7 @@
 #   source => 'orientdb/nagios-plugins/check_orientdb.sh'
 # }
 define icinga::plugin (
-  $source = ''
+  $source = '',
   $enable = true
   ) {
 
@@ -20,7 +20,7 @@ define icinga::plugin (
 
   $ensure = bool2ensure( $enable )
 
-  $real_source = $source {
+  $real_source = $source ? {
     ''      => "icinga/icinga-plugins/${name}",
     default => $source,
   }
