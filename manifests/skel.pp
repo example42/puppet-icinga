@@ -1,7 +1,7 @@
 # Class: icinga::skel
 #
 # Some extra stuff necessary for Example42 icinga implementation
-# Needed to make things go smoothly 
+# Needed to make things go smoothly
 #
 # Usage:
 # Autoincluded by icinga class
@@ -47,7 +47,7 @@ class icinga::skel {
     owner   => $icinga::configfile_owner,
     group   => $icinga::configfile_group,
     require => File['icinga_configdir'],
-    recurse => true, 
+    recurse => true,
     purge   => true,
     force   => true,
   }
@@ -158,9 +158,10 @@ class icinga::skel {
     content => template('icinga/settings/templates.cfg'),
   }
 
-  file { 'icinga_hostgroup_all.cfg':
-    ensure  => $icinga::manage_file,
-    path    => "${icinga::customconfigdir}/hostgroups/all.cfg",
+  file { 'icinga_hostgroup_alldefault.cfg':
+    ensure  => absent,
+    # ensure  => $icinga::manage_file,
+    path    => "${icinga::customconfigdir}/hostgroups/alldefault.cfg",
     mode    => '0644',
     owner   => $icinga::configfile_owner,
     group   => $icinga::configfile_group,
@@ -168,15 +169,24 @@ class icinga::skel {
     content => template('icinga/hostgroups/all.cfg'),
   }
 
-  # Htpasswd file (Defaultuser icingaadmin:admin)
+  # Htpasswd file (Defaultuser icingaadmin:example42)
   file { 'icinga_htpasswd':
     ensure  => $icinga::manage_file,
     path    => $icinga::htpasswdfile,
     mode    => '0644',
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
-    content => template('icinga/htpasswd'),
-    require => Package["icinga"],
+    content => template("${icinga::template_htpasswdfile}"),
+    require => Package['icinga'],
+  }
+
+  # icinga group needs permission to write in /var/lib/icinga/rw
+  if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
+    file { '/var/lib/icinga/rw':
+      ensure  => directory,
+      mode    => '0770',
+      require => Package["icinga"],
+    }
   }
 
 }

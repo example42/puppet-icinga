@@ -1,6 +1,7 @@
 # Define icinga::baseservices
 #
-# Use this to define Nagios basic service objects that will be applied to all nodes
+# Use this to define Nagios basic service objects that will be 
+# used for to all nodes
 # All local disks, memory, cpu, local users...
 # It's automatically loaded in icinga::target
 #
@@ -16,7 +17,7 @@ define icinga::baseservices (
 
   include icinga::target
 
-  case $::icinga_filemode { 
+  case $::icinga_filemode {
 
     'concat': {
       if $ensure == 'present' {
@@ -40,15 +41,15 @@ define icinga::baseservices (
 
     default: {
       @@file { "${icinga::target::customconfigdir}/services/${host_name}-00-baseservices.cfg":
+        ensure  => $ensure,
         mode    => '0644',
         owner   => 'root',
         group   => 'root',
-        ensure  => $ensure,
         notify  => Service['icinga'],
         content => template( $template ),
         tag     => "icinga_check_${icinga::target::magic_tag}",
       }
-    } 
+    }
 
   }
 

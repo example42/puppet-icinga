@@ -7,27 +7,42 @@
 # Usage:
 # include icinga::target
 #
-class icinga::target {
+class icinga::target (
+  host_template = 'generic-host'
+  ) {
 
   # This variable defines where icinga automatically generated 
   # files are places. This MUST be the same of $::icinga::customconfigdir
   # HINT: Do not mess with default path names...
-  $customconfigdir = '/etc/icinga/auto.d'
 
-  # TODO: Find a smarter solution that doesn't requre TopScope Variables
+  $customconfigdir = $::icinga_customconfigdir ? {
+    ''      => '/etc/icinga/auto.d',
+    default => $::icinga_customconfigdir,
+  }
+
+  $hostgroupsbuilddir = '/etc/icinga/hostgroups_build'
+
+  # TODO: Find a smarter solution that doesn't require TopScope Variables
   $magic_tag = get_magicvar($::icinga_grouplogic)
 
+  # TODO: Find a smarter solution that doesn't require TopScope Variables
+  $magic_hostgroup = get_magicvar($::icinga_hostgrouplogic)
+
   icinga::host { $fqdn: 
-    use => 'generic-host',
+    use => $host_template,
   }
 
   icinga::baseservices { $fqdn:
     use => 'generic-service',
   }
 
-# TODO: Automatic hostgroup management is broken. We'll review it later
-#  icinga::hostgroup { "${icinga::params::hostgroups}-$fqdn": 
-#    hostgroup => "${icinga::params::hostgroups}",
-#  }
+## TODO Make this work with nagios::plugins
+#   include icinga::plugins
 
+# Automatic hostgroup management
+  if $::icinga_hostgrouplogic {
+    icinga::hostgroup { $fqdn: 
+      hostgroup => $magic_hostgroup,
+    }
+  }
 }

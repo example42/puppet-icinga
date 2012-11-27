@@ -1,0 +1,22 @@
+# File Managed by Puppet
+# /etc/default/icinga
+
+# location of the icinga configuration file
+ICINGACFG="<%= scope.lookupvar('icinga::config_file') %>"
+
+# location of the CGI configuration file
+CGICFG="<%= scope.lookupvar('icinga::config_dir') %>/cgi.cfg"
+
+# nicelevel to run icinga daemon with
+NICENESS=5
+
+# start ido2db daemon (no/yes)
+<% if scope.lookupvar('icinga::bool_enable_idoutils') == true -%>
+IDO2DB=yes
+<% else -%>
+IDO2DB=no
+<% end -%>
+
+# if you use pam_tmpdir, you need to explicitly set TMPDIR:
+#TMPDIR=/tmp
+

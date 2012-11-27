@@ -51,14 +51,17 @@ temp_path=/tmp
 event_broker_options=-1
 #broker_module=/somewhere/module1.o
 #broker_module=/somewhere/module2.o arg1 arg2=3 debug=0
+<% if scope.lookupvar('icinga::bool_enable_idoutils') == true -%>
+broker_module=/usr/lib/icinga/idomod.o config_file=/etc/icinga/idomod.cfg
+<% end -%>
 
 # Logging options
 log_rotation_method=d
 log_archive_path=<%= scope.lookupvar('icinga::log_dir') %>/archives
-use_daemon_log=1
+#use_daemon_log=1
 use_syslog=1
-use_syslog_local_facility=0 
-syslog_local_facility=5
+#use_syslog_local_facility=0 
+#syslog_local_facility=5
 log_notifications=1
 log_service_retries=1
 log_host_retries=1
@@ -66,8 +69,8 @@ log_event_handlers=1
 log_initial_states=0
 log_external_commands=1
 log_passive_checks=1
-log_external_commands_user=0 
-log_long_plugin_output=0
+#log_external_commands_user=0 
+#log_long_plugin_output=0
 
 # Global Host and Service event handlers
 #global_host_event_handler=somecommand

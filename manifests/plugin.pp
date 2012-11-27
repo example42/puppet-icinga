@@ -1,4 +1,4 @@
-# Define: icinga::plugin
+# Define: pagios::plugin
 #
 # Adds a custom icinga plugin
 #
@@ -8,15 +8,15 @@
 #
 # With custom source (looked in source => $source)
 # icinga::plugin { 'check_orientdb':
-#   source => 'orientdb/nagios-plugins/check_orientdb.sh'
+#   source => 'orientdb/icinga-plugins/check_orientdb.sh'
 # }
 define icinga::plugin (
   $source = '',
+  $nrpe_cfg = '',
   $enable = true
   ) {
 
-  include icinga::params
-  include nrpe::params
+  include nrpe
 
   $ensure = bool2ensure( $enable )
 
@@ -25,14 +25,27 @@ define icinga::plugin (
     default => $source,
   }
 
-  file { "icinga_plugin_${name}":
-    path    => "${nrpe::params::pluginsdir}/${name}",
-    owner   => root,
-    group   => root,
-    mode    => 0755,
-    ensure  => $ensure,
-    source  => "puppet:///modules/${source}",
-    require => Package['icinga-plugins'],
+  if ( $source != 'no' ) {
+    file { "icinga_plugin_${name}":
+      ensure  => $ensure,
+      path    => "${nrpe::pluginsdir}/${name}",
+      owner   => root,
+      group   => root,
+      mode    => 0755,
+      source  => "puppet:///modules/${real_source}",
+      require => Class['nrpe'],
+    }
   }
 
+  if ( $nrpe_cfg != '' ) {
+    file { "nrpe_icinga_plugin_${name}":
+      ensure  => $ensure,
+      path    => "${nrpe::config_dir}/${name}.cfg",
+      owner   => root,
+      group   => root,
+      mode    => 0755,
+      notify  => $nrpe::manage_service_autorestart,
+      content => template($nrpe_cfg),
+    }
+  }
 }

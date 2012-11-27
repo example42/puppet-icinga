@@ -17,7 +17,7 @@ define icinga::service (
   $ensure              = 'present'
   ) {
 
-  # Autoinclude the target host class 
+  # Autoinclude the target host class
   # (each service must have a defined host)
   include icinga::target
 
@@ -32,7 +32,7 @@ define icinga::service (
     default => $service_description,
   }
 
-  case $::icinga_filemode { 
+  case $::icinga_filemode {
 
     'concat': {
       if $ensure == 'present' {
@@ -56,15 +56,15 @@ define icinga::service (
 
     default: {
       @@file { "${icinga::target::customconfigdir}/services/${host_name}-${name}.cfg":
+        ensure  => $ensure,
         mode    => '0644',
         owner   => 'root',
         group   => 'root',
-        ensure  => $ensure,
         notify  => Service['icinga'],
         content => template( $template ),
         tag     => "icinga_check_${icinga::target::magic_tag}",
       }
-    } 
+    }
 
   }
 

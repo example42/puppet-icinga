@@ -1,0 +1,28 @@
+class icinga::hostgroup_setup {
+
+  $local_hostgroup=$icinga::target::magic_hostgroup
+
+  @@concat { "${icinga::target::customconfigdir}/hostgroups/${local_hostgroup}.cfg":
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    tag     => "icinga_hostgroup_${icinga::target::magic_tag}",
+  }
+
+  @@concat::fragment { "icinga-hostgroup-header-${local_hostgroup}":
+    target  => "${icinga::target::customconfigdir}/hostgroups/${local_hostgroup}.cfg",
+    order   => '10',
+    notify  => Service['icinga'],
+    content => "define hostgroup {\n    hostgroup_name ${local_hostgroup}\n    alias ${local_hostgroup}\n",
+    tag     => "icinga_hostgroup_${icinga::target::magic_tag}",
+  }
+
+  @@concat::fragment { "icinga-hostgroup-footer-${local_hostgroup}":
+    target  => "${icinga::target::customconfigdir}/hostgroups/${local_hostgroup}.cfg",
+    order   => '90',
+    notify  => Service['icinga'],
+    content => "}\n",
+    tag     => "icinga_hostgroup_${icinga::target::magic_tag}",
+  }
+
+}

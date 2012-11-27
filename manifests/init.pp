@@ -174,54 +174,83 @@
 #
 class icinga (
   # $grouplogic          = params_lookup( 'grouplogic' ),
-  $check_external_commands = params_lookup( 'check_external_commands' ),
-  $plugins             = params_lookup( 'plugins' ),
-  $use_ssl             = params_lookup( 'use_ssl' ),
-  $cachedir            = params_lookup( 'cachedir' ),
-  $resourcefile        = params_lookup( 'resourcefile' ),
-  $statusfile          = params_lookup( 'statusfile' ),
-  $commandfile         = params_lookup( 'commandfile' ),
-  $resultpath          = params_lookup( 'resultpath' ),
-  $retentionfile       = params_lookup( 'retentionfile' ),
-  $p1file              = params_lookup( 'p1file' ),
-  $nrpepluginpackage   = params_lookup( 'nrpepluginpackage' ),
-  $htpasswdfile        = params_lookup( 'htpasswdfile' ),
-  $my_class            = params_lookup( 'my_class' ),
-  $source              = params_lookup( 'source' ),
-  $source_dir          = params_lookup( 'source_dir' ),
-  $source_dir_purge    = params_lookup( 'source_dir_purge' ),
-  $template            = params_lookup( 'template' ),
-  $service_autorestart = params_lookup( 'service_autorestart' , 'global' ),
-  $options             = params_lookup( 'options' ),
-  $version             = params_lookup( 'version' ),
-  $absent              = params_lookup( 'absent' ),
-  $disable             = params_lookup( 'disable' ),
-  $disableboot         = params_lookup( 'disableboot' ),
-  $monitor             = params_lookup( 'monitor' , 'global' ),
-  $monitor_tool        = params_lookup( 'monitor_tool' , 'global' ),
-  $monitor_target      = params_lookup( 'monitor_target' , 'global' ),
-  $puppi               = params_lookup( 'puppi' , 'global' ),
-  $puppi_helper        = params_lookup( 'puppi_helper' , 'global' ),
-  $debug               = params_lookup( 'debug' , 'global' ),
-  $audit_only          = params_lookup( 'audit_only' , 'global' ),
-  $package             = params_lookup( 'package' ),
-  $service             = params_lookup( 'service' ),
-  $service_status      = params_lookup( 'service_status' ),
-  $process             = params_lookup( 'process' ),
-  $process_args        = params_lookup( 'process_args' ),
-  $process_user        = params_lookup( 'process_user' ),
-  $config_dir          = params_lookup( 'config_dir' ),
-  $config_file         = params_lookup( 'config_file' ),
-  $config_file_mode    = params_lookup( 'config_file_mode' ),
-  $config_file_owner   = params_lookup( 'config_file_owner' ),
-  $config_file_group   = params_lookup( 'config_file_group' ),
-  $config_file_init    = params_lookup( 'config_file_init' ),
-  $pid_file            = params_lookup( 'pid_file' ),
-  $data_dir            = params_lookup( 'data_dir' ),
-  $log_dir             = params_lookup( 'log_dir' ),
-  $log_file            = params_lookup( 'log_file' )
+  $enable_icingaweb            = params_lookup( 'enable_icingaweb' ),
+  $template_icingaweb          = params_lookup( 'template_icingaweb' ),
+  $source_dir_icingaweb        = params_lookup( 'source_dir_icingaweb' ),
+  $source_dir_purge_icingaweb  = params_lookup( 'source_dir_purge_icingaweb' ),
+  $config_dir_icingaweb        = params_lookup( 'config_dir_icingaweb' ),
+  $config_file_icingaweb       = params_lookup( 'config_file_icingaweb' ),
+  $config_file_mode_icingaweb  = params_lookup( 'config_file_mode_icingaweb' ),
+  $config_file_owner_icingaweb = params_lookup( 'config_file_owner_icingaweb' ),
+  $config_file_group_icingaweb = params_lookup( 'config_file_group_icingaweb' ),
+  $db_host_icingaweb           = params_lookup( 'db_host_icingaweb' ),
+  $db_name_icingaweb           = params_lookup( 'db_name_icingaweb' ),
+  $db_user_icingaweb           = params_lookup( 'db_user_icingaweb' ),
+  $db_password_icingaweb       = params_lookup( 'db_password_icingaweb' ),
+  $enable_idoutils             = params_lookup( 'enable_idoutils' ),
+  $template_idoutils           = params_lookup( 'template_idoutils' ),
+  $db_host_idoutils            = params_lookup( 'db_host_idoutils' ),
+  $db_name_idoutils            = params_lookup( 'db_name_idoutils' ),
+  $db_user_idoutils            = params_lookup( 'db_user_idoutils' ),
+  $db_password_idoutils        = params_lookup( 'db_password_idoutils' ),
+  $check_external_commands     = params_lookup( 'check_external_commands' ),
+  $plugins                     = params_lookup( 'plugins' ),
+  $use_ssl                     = params_lookup( 'use_ssl' ),
+  $cachedir                    = params_lookup( 'cachedir' ),
+  $resourcefile                = params_lookup( 'resourcefile' ),
+  $statusfile                  = params_lookup( 'statusfile' ),
+  $commandfile                 = params_lookup( 'commandfile' ),
+  $resultpath                  = params_lookup( 'resultpath' ),
+  $retentionfile               = params_lookup( 'retentionfile' ),
+  $p1file                      = params_lookup( 'p1file' ),
+  $nrpepluginpackage           = params_lookup( 'nrpepluginpackage' ),
+  $htpasswdfile                = params_lookup( 'htpasswdfile' ),
+  $template_htpasswdfile       = params_lookup( 'template_htpasswdfile' ),
+  $my_class                    = params_lookup( 'my_class' ),
+  $source                      = params_lookup( 'source' ),
+  $source_dir                  = params_lookup( 'source_dir' ),
+  $source_dir_purge            = params_lookup( 'source_dir_purge' ),
+  $template                    = params_lookup( 'template' ),
+  $service_autorestart         = params_lookup( 'service_autorestart' , 'global' ),
+  $options                     = params_lookup( 'options' ),
+  $version                     = params_lookup( 'version' ),
+  $absent                      = params_lookup( 'absent' ),
+  $disable                     = params_lookup( 'disable' ),
+  $disableboot                 = params_lookup( 'disableboot' ),
+  $monitor                     = params_lookup( 'monitor' , 'global' ),
+  $monitor_tool                = params_lookup( 'monitor_tool' , 'global' ),
+  $monitor_target              = params_lookup( 'monitor_target' , 'global' ),
+  $puppi                       = params_lookup( 'puppi' , 'global' ),
+  $puppi_helper                = params_lookup( 'puppi_helper' , 'global' ),
+  $debug                       = params_lookup( 'debug' , 'global' ),
+  $audit_only                  = params_lookup( 'audit_only' , 'global' ),
+  $package                     = params_lookup( 'package' ),
+  $service                     = params_lookup( 'service' ),
+  $service_status              = params_lookup( 'service_status' ),
+  $process                     = params_lookup( 'process' ),
+  $process_args                = params_lookup( 'process_args' ),
+  $process_user                = params_lookup( 'process_user' ),
+  $config_dir                  = params_lookup( 'config_dir' ),
+  $config_file                 = params_lookup( 'config_file' ),
+  $config_file_mode            = params_lookup( 'config_file_mode' ),
+  $config_file_owner           = params_lookup( 'config_file_owner' ),
+  $config_file_group           = params_lookup( 'config_file_group' ),
+  $config_file_init            = params_lookup( 'config_file_init' ),
+  $pid_file                    = params_lookup( 'pid_file' ),
+  $data_dir                    = params_lookup( 'data_dir' ),
+  $log_dir                     = params_lookup( 'log_dir' ),
+  $log_file                    = params_lookup( 'log_file' )
   ) inherits icinga::params {
 
+  $bool_enable_icingaweb=any2bool($enable_icingaweb)
+  $temp_bool_enable_idoutils=any2bool($enable_idoutils)
+  $bool_enable_idoutils=$bool_enable_icingaweb ? {
+    true  => true,
+    false => $temp_bool_enable_idoutils,
+  }
+
+  $bool_source_dir_purge_icingaweb=any2bool($source_dir_purge_icingaweb)
+  $bool_use_ssl=any2bool($use_ssl)
   $bool_check_external_commands=any2bool($check_external_commands)
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
@@ -297,7 +326,19 @@ class icinga (
     default   => template($icinga::template),
   }
 
+  $manage_file_content_icingaweb = $icinga::template_icingaweb ? {
+    ''        => undef,
+    default   => template($icinga::template_icingaweb),
+  }
+
+  $manage_file_content_idoutils = template($icinga::template_idoutils)
+
   ### Managed resources
+  package { 'nrpe-plugin':
+    ensure => $icinga::manage_package,
+    name   => $icinga::nrpepluginpackage,
+  }
+
   package { 'icinga':
     ensure => $icinga::manage_package,
     name   => $icinga::package,
@@ -343,10 +384,10 @@ class icinga (
 
   # Include configuration directories and files
   include icinga::skel
-
+  include icinga::target
   # Collects all the stored configs regarding icinga
   # Host/Service Checks aggregation policy is based on $::icinga_filemode
-  case $::icinga_filemode { 
+  case $::icinga_filemode {
     'concat': {
       # One file per host with all the relevant services in auto.d/hosts
       # Concatenated with puppetlabs-concat
@@ -367,6 +408,14 @@ class icinga (
     }
   }
 
+  $magic_hostgroup = get_magicvar($::icinga_hostgrouplogic)
+  if $::icinga_hostgrouplogic {
+    #include concat::setup
+    #Concat <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
+    #Concat::Fragment <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
+    include icinga::hostgroup_setup
+    File <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
+  }
 
   ### Include custom class if $my_class is set
   if $icinga::my_class {
@@ -408,6 +457,26 @@ class icinga (
       owner   => 'root',
       group   => 'root',
       content => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
+    }
+  }
+
+
+  ### IDOUTILS Support
+  if $icinga::bool_enable_idoutils == true {
+    include icinga::idoutils
+  }
+
+  ### ICINGAWEB Installation
+  if $icinga::bool_enable_icingaweb == true {
+    include icinga::web
+  }
+
+  ### Adding www-data to group icinga.
+  ### www-data needs permission to icinga.cmd when executing external commands.
+  if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
+    user { "www-data":
+      groups  => 'nagios',
+      require => [ Package['icinga'] ],
     }
   }
 

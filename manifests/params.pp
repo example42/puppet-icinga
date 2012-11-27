@@ -14,6 +14,31 @@
 #
 class icinga::params {
 
+  $enable_icingaweb = false
+  $template_icingaweb = 'icinga/databases.xml.erb'
+  $source_dir_icingaweb = ''
+  $source_dir_icingaweb_purge = false
+  $config_dir_icingaweb = '/etc/icinga-web/conf.d'
+  $config_file_icingaweb = '/etc/icinga-web/conf.d/databases.xml'
+  $config_file_mode_icingaweb = '0640'
+  $config_file_owner_icingaweb = 'root'
+  $config_file_group_icingaweb = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/ => 'www-data',
+    default                   => 'httpd',
+  }
+
+  $db_host_icingaweb = 'localhost'
+  $db_name_icingaweb = 'icinga_web'
+  $db_user_icingaweb = 'icinga_web'
+  $db_password_icingaweb  = 'icinga_web'
+
+  $enable_idoutils = false
+  $template_idoutils = 'icinga/ido2db.cfg.erb'
+  $db_host_idoutils = 'localhost'
+  $db_name_idoutils = 'icinga'
+  $db_user_idoutils = 'icinga-idoutils'
+  $db_password_idoutils  = 'icinga-idoutils'
+
   $grouplogic = ''
 
   $check_external_commands = true
@@ -69,6 +94,8 @@ class icinga::params {
     default                                => 'nagios-plugins',
   }
 
+  $template_htpasswdfile = 'icinga/htpasswd'
+
   $htpasswdfile = $::operatingsystem ? {
     default => '/etc/icinga/htpasswd.users',
   }
@@ -77,11 +104,11 @@ class icinga::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
-    default => 'icinga',
+    default                   => 'icinga',
   }
 
   $service = $::operatingsystem ? {
-    default => 'icinga',
+    default                   => 'icinga',
   }
 
   $service_status = $::operatingsystem ? {
@@ -89,7 +116,7 @@ class icinga::params {
   }
 
   $process = $::operatingsystem ? {
-    default => 'icinga',
+    default                   => 'icinga',
   }
 
   $process_args = $::operatingsystem ? {
@@ -102,11 +129,11 @@ class icinga::params {
   }
 
   $config_dir = $::operatingsystem ? {
-    default => '/etc/icinga',
+    default                   => '/etc/icinga',
   }
 
   $config_file = $::operatingsystem ? {
-    default => '/etc/icinga/icinga.cfg',
+    default                   => '/etc/icinga/icinga.cfg',
   }
 
   $config_file_mode = $::operatingsystem ? {
@@ -130,12 +157,11 @@ class icinga::params {
   }
 
   $pid_file = $::operatingsystem ? {
-    /(?i:RedHat|Scientific|Centos)/ => '/var/icinga/icinga.pid',
+    /(?i:RedHat|Scientific|Centos)/ => '/var/run/icinga.pid',
     default                         => '/var/run/icinga/icinga.pid',
   }
 
   $data_dir = $::operatingsystem ? {
-    /(?i:RedHat|Scientific|Centos)/ => '/var/icinga', 
     default                         => '/var/lib/icinga',
   }
 

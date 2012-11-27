@@ -7,7 +7,7 @@
 # You can decide what method to use to create resources on the
 # icinga server with the $::icinga_filemode top scope variable
 # NOTE: THIS MUST BE the same for all nodes
-# 
+#
 # Usage:
 # icinga::host { "$fqdn": }
 #
@@ -23,7 +23,7 @@ define icinga::host (
 
   include icinga::target
 
-  case $::icinga_filemode { 
+  case $::icinga_filemode {
 
     'concat': {
       if $ensure == 'present' {
@@ -45,11 +45,11 @@ define icinga::host (
 
     'pupmod-concat': {
       if $ensure == 'present' {
-        @@concat_build { "icinga-${host_name}":
+        @@concat_build { "icinga-${::hostname}":
           target => "${icinga::target::customconfigdir}/hosts/${name}.cfg",
           order  => ['*.tmp'],
         }
-        @@concat_fragment { "icinga-${host_name}+200_${name}.tmp":
+        @@concat_fragment { "icinga-${::hostname}+200_${name}.tmp":
           content => template( $template ),
         }
       }
@@ -57,15 +57,15 @@ define icinga::host (
 
     default: {
       @@file { "${icinga::target::customconfigdir}/hosts/${name}.cfg":
+        ensure  => $ensure,
         mode    => '0644',
         owner   => 'root',
         group   => 'root',
-        ensure  => $ensure,
         notify  => Service['icinga'],
         content => template( $template ),
         tag     => "icinga_check_${icinga::target::magic_tag}",
       }
-    } 
+    }
 
   }
 
