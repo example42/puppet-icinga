@@ -8,7 +8,7 @@
 # include icinga::target
 #
 class icinga::target (
-  host_template = 'generic-host'
+  $host_template = 'generic-host'
   ) {
 
   # This variable defines where icinga automatically generated 
