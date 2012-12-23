@@ -10,7 +10,10 @@ class icinga::hostgroup_setup {
   file { 'icinga-hostgroup-build_dir':
     path    => $icinga::target::hostgroupsbuilddir,
     ensure  => directory,
+    recurse => true,
     purge   => true,
+#    source  => 'puppet:///icinga/hostgroups/',
+    notify  => Exec['hostgroups_build'],
   }
 
   file { 'icinga-hostgroup-build_command':
