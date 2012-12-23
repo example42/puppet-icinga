@@ -159,8 +159,10 @@ class icinga::skel {
   }
 
   file { 'icinga_hostgroup_alldefault.cfg':
-    ensure  => absent,
-    # ensure  => $icinga::manage_file,
+    ensure  => $::icinga_hostgrouplogic ? { 
+      ''      => present,
+      default => absent,
+    },
     path    => "${icinga::customconfigdir}/hostgroups/alldefault.cfg",
     mode    => '0644',
     owner   => $icinga::configfile_owner,
