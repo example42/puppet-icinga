@@ -8,8 +8,8 @@ class icinga::hostgroup_setup {
   }
 
   file { 'icinga-hostgroup-build_dir':
-    path    => $icinga::target::hostgroupsbuilddir,
     ensure  => directory,
+    path    => $icinga::target::hostgroupsbuilddir,
     recurse => true,
     purge   => true,
 #    source  => 'puppet:///icinga/hostgroups/',
@@ -17,9 +17,9 @@ class icinga::hostgroup_setup {
   }
 
   file { 'icinga-hostgroup-build_command':
-    path    => '/usr/local/bin/icinga_build_hostgroups.sh',
     ensure  => present,
-    mode    => 0750,
+    path    => '/usr/local/bin/icinga_build_hostgroups.sh',
+    mode    => '0750',
     owner   => 'root',
     group   => 'root',
     content => template('icinga/icinga_build_hostgroups.sh'),
