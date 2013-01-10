@@ -158,11 +158,13 @@ class icinga::skel {
     content => template('icinga/settings/templates.cfg'),
   }
 
+  $alldefault_ensure = $::icinga_hostgrouplogic ? {
+    ''      => present,
+    default => absent,
+  },
+
   file { 'icinga_hostgroup_alldefault.cfg':
-    ensure  => $::icinga_hostgrouplogic ? { 
-      ''      => present,
-      default => absent,
-    },
+    ensure  => $alldefault_ensure,
     path    => "${icinga::customconfigdir}/hostgroups/alldefault.cfg",
     mode    => '0644',
     owner   => $icinga::configfile_owner,
@@ -178,7 +180,7 @@ class icinga::skel {
     mode    => '0644',
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
-    content => template("${icinga::template_htpasswdfile}"),
+    content => template($icinga::template_htpasswdfile),
     require => Package['icinga'],
   }
 
@@ -187,7 +189,7 @@ class icinga::skel {
     file { '/var/lib/icinga/rw':
       ensure  => directory,
       mode    => '0770',
-      require => Package["icinga"],
+      require => Package['icinga'],
     }
   }
 

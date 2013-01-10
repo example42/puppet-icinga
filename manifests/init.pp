@@ -474,7 +474,7 @@ class icinga (
   ### Adding www-data to group icinga.
   ### www-data needs permission to icinga.cmd when executing external commands.
   if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
-    user { "www-data":
+    user { 'www-data':
       groups  => 'nagios',
       require => [ Package['icinga'] ],
     }

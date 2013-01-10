@@ -11,7 +11,7 @@ class icinga::target (
   $host_template = 'generic-host'
   ) {
 
-  # This variable defines where icinga automatically generated 
+  # This variable defines where icinga automatically generated
   # files are places. This MUST be the same of $::icinga::customconfigdir
   # HINT: Do not mess with default path names...
 
@@ -28,11 +28,11 @@ class icinga::target (
   # TODO: Find a smarter solution that doesn't require TopScope Variables
   $magic_hostgroup = get_magicvar($::icinga_hostgrouplogic)
 
-  icinga::host { $fqdn: 
+  icinga::host { $::fqdn:
     use => $host_template,
   }
 
-  icinga::baseservices { $fqdn:
+  icinga::baseservices { $::fqdn:
     use => 'generic-service',
   }
 
@@ -41,7 +41,7 @@ class icinga::target (
 
 # Automatic hostgroup management
   if $::icinga_hostgrouplogic {
-    icinga::hostgroup { $fqdn: 
+    icinga::hostgroup { $::fqdn:
       hostgroup => $magic_hostgroup,
     }
   }
