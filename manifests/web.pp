@@ -8,13 +8,14 @@ class icinga::web {
 
   # QUICK AND DIRTY
   file { '/etc/apache2/conf.d/icinga-web.conf':
-    ensure => '/etc/icinga-web/apache2.conf',
+    ensure => link,
+    target => '/etc/icinga-web/apache2.conf',
   }
 
   if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
     apt::repository { 'icinga':
       url        => 'http://icingabuild.dus.dg-i.net/',
-      distro     => "icinga-web-${lsbdistcodename}",
+      distro     => "icinga-web-${::lsbdistcodename}",
       repository => 'main',
     }
   }

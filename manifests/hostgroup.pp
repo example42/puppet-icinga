@@ -16,8 +16,8 @@ define icinga::hostgroup (
   ) {
 
   @@file { "icinga-hostgroup-member-${name}":
-    path    => "${icinga::target::hostgroupsbuilddir}/${hostgroup},${name}",
     ensure  => $ensure,
+    path    => "${icinga::target::hostgroupsbuilddir}/${hostgroup},${name}",
     notify  => Exec['hostgroups_build'],
     tag     => "icinga_hostgroup_${icinga::target::magic_tag}",
   }
