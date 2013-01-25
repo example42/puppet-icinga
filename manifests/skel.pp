@@ -32,8 +32,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::customconfigdir}/hosts",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
     recurse => true,
     purge   => true,
@@ -44,8 +44,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::customconfigdir}/services",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
     recurse => true,
     purge   => true,
@@ -56,8 +56,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::customconfigdir}/commands",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
   }
 
@@ -65,8 +65,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::customconfigdir}/settings",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
   }
 
@@ -74,8 +74,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::customconfigdir}/hostgroups",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
   }
 
@@ -83,8 +83,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::customconfigdir}/extra",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
   }
 
@@ -92,8 +92,8 @@ class icinga::skel {
     ensure  => directory,
     path    => "${icinga::config_dir}/modules",
     mode    => '0755',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
   }
 
@@ -102,8 +102,8 @@ class icinga::skel {
     ensure  => $icinga::manage_file,
     path    => "${icinga::customconfigdir}/commands/general.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
     content => template('icinga/commands/general.cfg'),
   }
@@ -112,8 +112,8 @@ class icinga::skel {
     ensure  => $icinga::manage_file,
     path    => "${icinga::customconfigdir}/commands/extra.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
     content => template('icinga/commands/extra.cfg'),
   }
@@ -122,8 +122,8 @@ class icinga::skel {
     ensure  => $icinga::manage_file,
     path    => "${icinga::customconfigdir}/commands/special.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
     content => template('icinga/commands/special.cfg'),
   }
@@ -132,8 +132,8 @@ class icinga::skel {
     ensure  => $icinga::manage_file,
     path    => "${icinga::customconfigdir}/settings/contacts.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
     content => template('icinga/settings/contacts.cfg'),
   }
@@ -142,8 +142,8 @@ class icinga::skel {
     ensure  => $icinga::manage_file,
     path    => "${icinga::customconfigdir}/settings/timeperiods.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
     content => template('icinga/settings/timeperiods.cfg'),
   }
@@ -152,8 +152,8 @@ class icinga::skel {
     ensure  => $icinga::manage_file,
     path    => "${icinga::customconfigdir}/settings/templates.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
     content => template('icinga/settings/templates.cfg'),
   }
@@ -167,8 +167,8 @@ class icinga::skel {
     ensure  => $alldefault_ensure,
     path    => "${icinga::customconfigdir}/hostgroups/alldefault.cfg",
     mode    => '0644',
-    owner   => $icinga::configfile_owner,
-    group   => $icinga::configfile_group,
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
     require => File['icinga_configdir_hostgroups'],
     content => template('icinga/hostgroups/all.cfg'),
   }
