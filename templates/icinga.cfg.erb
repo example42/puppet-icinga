@@ -1,7 +1,7 @@
 # File Managed by Puppet
 
 # This should be the first option
-log_file=<%= scope.lookupvar('icinga::log_dir') %>/icinga._log
+log_file=<%= scope.lookupvar('icinga::log_file') %>
 
 # All configurations are managed by the module to keep sanity
 # and consistency among different OS. Default config files are ignored
