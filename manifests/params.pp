@@ -67,12 +67,12 @@ class icinga::params {
   }
 
   $resultpath = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/retention.dat',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/checkresults',
     default                                => '/var/lib/icinga/spool/checkresults',
   }
 
   $retentionfile = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/retention.dat',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/retention.dat',
     default                                => '/var/lib/icinga/retention.dat',
   }
 
