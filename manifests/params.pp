@@ -62,7 +62,7 @@ class icinga::params {
   }
 
   $commandfile = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/rw/icinga.cmd',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/cmd/icinga.cmd',
     default                                => '/var/lib/icinga/rw/icinga.cmd',
   }
 
