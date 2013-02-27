@@ -48,8 +48,12 @@ class icinga::params {
   $use_ssl = true
 
   $cachedir = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/',
     default                                => '/var/cache/icinga',
+  }
+
+  $temp_dir = $::operatingsystem ? {
+    default                                => '/tmp',
   }
 
   $resourcefile = $::operatingsystem ? {
@@ -57,7 +61,7 @@ class icinga::params {
   }
 
   $statusfile = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/status.dat',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/status.dat',
     default                                => '/var/lib/icinga/status.dat',
   }
 
