@@ -211,7 +211,7 @@ date_format=iso8601
 # P1.PL FILE LOCATION
 p1_file=<%= scope.lookupvar('icinga::p1file') %>
 <% if scope.lookupvar('icinga::version') != "2" -%>
-enable_embedded_perl=1
+enable_embedded_perl=0
 use_embedded_perl_implicitly=1
 <% end -%>
 
