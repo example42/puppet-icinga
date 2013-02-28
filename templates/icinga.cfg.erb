@@ -42,9 +42,9 @@ external_command_buffer_slots=4096
 
 # Temporary files
 lock_file=<%= scope.lookupvar('icinga::pid_file') %>
-temp_file=<%= scope.lookupvar('icinga::cachedir') %>/icinga.tmp
+temp_file=<%= scope.lookupvar('icinga::temp_dir') %>/icinga.tmp
 <% if scope.lookupvar('icinga::version') != "2" -%>
-temp_path=/tmp
+temp_path=<%= scope.lookupvar('icinga::temp_dir') %>
 <% end -%>
 
 # Event broker
