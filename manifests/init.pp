@@ -197,6 +197,7 @@ class icinga (
   $plugins                     = params_lookup( 'plugins' ),
   $use_ssl                     = params_lookup( 'use_ssl' ),
   $cachedir                    = params_lookup( 'cachedir' ),
+  $temp_dir                    = params_lookup( 'temp_dir' ),
   $resourcefile                = params_lookup( 'resourcefile' ),
   $statusfile                  = params_lookup( 'statusfile' ),
   $commandfile                 = params_lookup( 'commandfile' ),
