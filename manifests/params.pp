@@ -48,8 +48,12 @@ class icinga::params {
   $use_ssl = true
 
   $cachedir = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/',
     default                                => '/var/cache/icinga',
+  }
+
+  $temp_dir = $::operatingsystem ? {
+    default                                => '/tmp',
   }
 
   $resourcefile = $::operatingsystem ? {
@@ -57,22 +61,22 @@ class icinga::params {
   }
 
   $statusfile = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/status.dat',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/status.dat',
     default                                => '/var/lib/icinga/status.dat',
   }
 
   $commandfile = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/rw/icinga.cmd',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/cmd/icinga.cmd',
     default                                => '/var/lib/icinga/rw/icinga.cmd',
   }
 
   $resultpath = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/retention.dat',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/checkresults',
     default                                => '/var/lib/icinga/spool/checkresults',
   }
 
   $retentionfile = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/icinga/retention.dat',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/retention.dat',
     default                                => '/var/lib/icinga/retention.dat',
   }
 

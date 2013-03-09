@@ -10,15 +10,6 @@ class icinga::skel {
 
   include icinga
 
-  file { 'icinga.cmd':
-    ensure  => $icinga::manage_file,
-    path    => $icinga::commandfile,
-    mode    => '0660',
-    owner   => $icinga::process_user,
-    group   => $icinga::process_user,
-    require => Package['icinga'],
-  }
-
   file { 'icinga_configdir':
     ensure  => directory,
     path    => $icinga::customconfigdir,
