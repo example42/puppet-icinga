@@ -110,11 +110,8 @@ describe 'icinga' do
     end
   end
 
-  describe 'Test service autorestart', :broken => true do
-    it 'should automatically restart the service, by default' do
-      content = catalogue.resource('file', 'icinga.conf').send(:parameters)[:notify]
-      content.should == 'Service[icinga]{:name=>"icinga"}'
-    end
+  describe 'Test service autorestart' do
+    it { should contain_file('icinga.conf').with_notify('Service[icinga]') }
   end
 
   describe 'Test service autorestart' do
