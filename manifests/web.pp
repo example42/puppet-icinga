@@ -6,10 +6,15 @@ class icinga::web {
     ensure => $icinga::manage_package,
   }
 
+  package { 'php-mysql':
+    ensure => $icinga::manage_package,
+    name   => $icinga::phpmysql_package,
+  }
+
   # QUICK AND DIRTY
-  file { '/etc/apache2/conf.d/icinga-web.conf':
+  file { '/etc/icinga-web/apache2.conf':
     ensure => link,
-    target => '/etc/icinga-web/apache2.conf',
+    target => $icinga::apache_icingaweb_config,
   }
 
   if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {

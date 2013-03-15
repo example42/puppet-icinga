@@ -3,6 +3,8 @@
 	<name>icinga</name>
 	<comment></comment>
 	<projects>
+		<project>apache</project>
+		<project>concat</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
