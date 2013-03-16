@@ -188,6 +188,8 @@ class icinga (
   $db_name_icingaweb           = params_lookup( 'db_name_icingaweb' ),
   $db_user_icingaweb           = params_lookup( 'db_user_icingaweb' ),
   $db_password_icingaweb       = params_lookup( 'db_password_icingaweb' ),
+  $ido_pid_file                = params_lookup( 'ido_pid_file' ),
+  $ido_socket_file             = params_lookup( 'ido_socket_file' ),
   $idoutilspackage             = params_lookup( 'idoutilspackage' ),
   $enable_idoutils             = params_lookup( 'enable_idoutils' ),
   $template_idoutils           = params_lookup( 'template_idoutils' ),

@@ -49,11 +49,6 @@ temp_path=<%= scope.lookupvar('icinga::temp_dir') %>
 
 # Event broker
 event_broker_options=-1
-#broker_module=/somewhere/module1.o
-#broker_module=/somewhere/module2.o arg1 arg2=3 debug=0
-<% if scope.lookupvar('icinga::bool_enable_idoutils') == true -%>
-broker_module=/usr/lib/icinga/idomod.o config_file=/etc/icinga/idomod.cfg
-<% end -%>
 
 # Logging options
 log_rotation_method=d

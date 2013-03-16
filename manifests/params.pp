@@ -14,6 +14,8 @@
 #
 class icinga::params {
 
+  ### ICINGA-WEB variables
+  ####################################################
   $enable_icingaweb = false
   $template_icingaweb = 'icinga/databases.xml.erb'
   $source_dir_icingaweb = ''
@@ -22,15 +24,18 @@ class icinga::params {
   $config_file_icingaweb = '/etc/icinga-web/conf.d/databases.xml'
   $config_file_mode_icingaweb = '0640'
   $config_file_owner_icingaweb = 'root'
+
   $config_file_group_icingaweb = $::operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/              => 'www-data',
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'apache',
     default                                => 'httpd',
   }
+
   $apache_icingaweb_config = $::operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/ => '/etc/apache2/conf.d/icinga-web.conf',
     default                   => '/etc/httpd/conf.d/icinga-web.conf',
   }
+
   $db_host_icingaweb = 'localhost'
   $db_name_icingaweb = 'icinga_web'
   $db_user_icingaweb = 'icinga_web'
@@ -41,6 +46,8 @@ class icinga::params {
     default                                => 'php5-mysql',
   }
 
+  ## ICINGA IDOUTILS variables
+  ####################################################
   $idoutilspackage = $::operatingsystem ? {
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'icinga-idoutils-libdbi-mysql',
     default                                => 'icinga-idoutils',
@@ -53,6 +60,18 @@ class icinga::params {
   $db_user_idoutils = 'icinga-idoutils'
   $db_password_idoutils  = 'icinga-idoutils'
 
+  $ido_pid_file = $::operatingsystem ? {
+    /(?i:RedHat|Scientific|Centos)/ => '/var/run/ido2db.pid',
+    default                         => '/var/run/icinga/ido2db.pid',
+  }
+
+  $ido_socket_file = $::operatingsystem ? {
+    /(?i:RedHat|Scientific|Centos)/ => '/var/spool/icinga/ido.sock',
+    default                         => '/var/lib/icinga/ido.sock',
+  }
+  
+  ### ICINGA-CGI variables
+  ####################################################
   $icingacgipackage = $::operatingsystem ? {
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'icinga-gui',
     default                                => 'icinga-cgi',
@@ -65,6 +84,8 @@ class icinga::params {
     default                   => '/etc/httpd/conf.d/icinga.conf',
   }
 
+  ### ICINGA variables
+  ####################################################
   $grouplogic = ''
 
   $check_external_commands = true
@@ -114,6 +135,14 @@ class icinga::params {
     default                                => '/usr/lib/icinga/p1.pl',
   }
 
+  $template_htpasswdfile = 'icinga/htpasswd'
+
+  $htpasswdfile = $::operatingsystem ? {
+    default => '/etc/icinga/htpasswd.users',
+  }
+
+  ### ICINGA variables
+  ####################################################
   $nrpepluginpackage = $::operatingsystem ? {
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'nagios-plugins-nrpe',
     default                                => 'nagios-nrpe-plugin',
@@ -123,14 +152,7 @@ class icinga::params {
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'nagios-plugins-all',
     default                                => 'nagios-plugins',
   }
-
-  $template_htpasswdfile = 'icinga/htpasswd'
-
-  $htpasswdfile = $::operatingsystem ? {
-    default => '/etc/icinga/htpasswd.users',
-  }
-
-
+  
   ### Application related parameters
 
   $package = $::operatingsystem ? {
