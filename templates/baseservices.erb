@@ -19,7 +19,7 @@ define service {
 define service {
     host_name           <%= host_name %>
     service_description All_Disks_Usage
-    check_command       check_nrpe!check_all_disks!noarg
+    check_command       check_nrpe!check_all_disks_param!noarg
     use                 <%= use %>
 }
 
