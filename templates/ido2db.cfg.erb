@@ -9,7 +9,7 @@
 # This is the lockfile that IDO2DB will use to store its PID number
 # in when it is running in daemon mode.
 
-lock_file=/var/run/icinga/ido2db.pid
+lock_file=<%= scope.lookupvar('icinga::ido_pid_file') %>
 
 
 
@@ -40,7 +40,16 @@ socket_type=unix
 # This option is only valid if the socket type specified above
 # is "unix".
 
-socket_name=/var/lib/icinga/ido.sock
+socket_name=<%= scope.lookupvar('icinga::ido_socket_file') %>
+
+
+
+# SOCKET PERMISSIONS
+# This option determines the permissions of the Unix domain
+# socket. This option is only valid if the socket type specified
+# above is "unix". Default permissions are set to 0755.
+
+socket_perm=0755
 
 
 
@@ -273,7 +282,7 @@ debug_verbosity=1
 # DEBUG FILE
 # This option determines where the daemon should write debugging information.
 
-debug_file==<%= scope.lookupvar('icinga::log_dir') %>/ido2db.debug
+debug_file=<%= scope.lookupvar('icinga::log_dir') %>/ido2db.debug
 
 
 

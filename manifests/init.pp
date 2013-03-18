@@ -183,16 +183,24 @@ class icinga (
   $config_file_mode_icingaweb  = params_lookup( 'config_file_mode_icingaweb' ),
   $config_file_owner_icingaweb = params_lookup( 'config_file_owner_icingaweb' ),
   $config_file_group_icingaweb = params_lookup( 'config_file_group_icingaweb' ),
+  $apache_icingaweb_config     = params_lookup( 'apache_icingaweb_config' ),
   $db_host_icingaweb           = params_lookup( 'db_host_icingaweb' ),
   $db_name_icingaweb           = params_lookup( 'db_name_icingaweb' ),
   $db_user_icingaweb           = params_lookup( 'db_user_icingaweb' ),
   $db_password_icingaweb       = params_lookup( 'db_password_icingaweb' ),
+  $ido_pid_file                = params_lookup( 'ido_pid_file' ),
+  $ido_socket_file             = params_lookup( 'ido_socket_file' ),
+  $idoutilspackage             = params_lookup( 'idoutilspackage' ),
   $enable_idoutils             = params_lookup( 'enable_idoutils' ),
   $template_idoutils           = params_lookup( 'template_idoutils' ),
   $db_host_idoutils            = params_lookup( 'db_host_idoutils' ),
   $db_name_idoutils            = params_lookup( 'db_name_idoutils' ),
   $db_user_idoutils            = params_lookup( 'db_user_idoutils' ),
   $db_password_idoutils        = params_lookup( 'db_password_idoutils' ),
+  $phpmysql_package            = params_lookup( 'phpmysql_package' ),
+  $icingacgipackage            = params_lookup( 'icingacgipackage' ),
+  $enable_icingacgi            = params_lookup( 'enable_icingacgi' ),
+  $apache_icingacgi_config     = params_lookup( 'apache_icingacgi_config' ),
   $check_external_commands     = params_lookup( 'check_external_commands' ),
   $plugins                     = params_lookup( 'plugins' ),
   $use_ssl                     = params_lookup( 'use_ssl' ),
@@ -244,6 +252,7 @@ class icinga (
   ) inherits icinga::params {
 
   $bool_enable_icingaweb=any2bool($enable_icingaweb)
+  $bool_enable_icingacgi=any2bool($enable_icingacgi)
   $temp_bool_enable_idoutils=any2bool($enable_idoutils)
   $bool_enable_idoutils=$bool_enable_icingaweb ? {
     true  => true,
@@ -461,7 +470,6 @@ class icinga (
     }
   }
 
-
   ### IDOUTILS Support
   if $icinga::bool_enable_idoutils == true {
     include icinga::idoutils
@@ -470,6 +478,11 @@ class icinga (
   ### ICINGAWEB Installation
   if $icinga::bool_enable_icingaweb == true {
     include icinga::web
+  }
+
+  ### ICINGACGI Installation
+  if $icinga::bool_enable_icingacgi == true {
+    include icinga::cgi
   }
 
   ### Adding www-data to group icinga.
