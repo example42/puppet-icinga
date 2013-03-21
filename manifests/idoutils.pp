@@ -9,6 +9,7 @@ class icinga::idoutils {
 
   package { 'icinga-idoutils':
     ensure => $icinga::manage_package,
+    name   => $icinga::idoutilspackage,
   }
 
   service { 'ido2db':
