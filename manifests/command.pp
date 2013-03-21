@@ -4,7 +4,7 @@
 #
 define icinga::command ( $command_line  = '' , $ensure = 'present' ) {
 
-  require icinga
+  include icinga
 
   file { "${icinga::customconfigdir}/commands/${name}.cfg":
     ensure  => $ensure,
