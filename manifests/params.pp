@@ -69,7 +69,7 @@ class icinga::params {
     /(?i:RedHat|Scientific|Centos)/ => '/var/spool/icinga/ido.sock',
     default                         => '/var/lib/icinga/ido.sock',
   }
-  
+
   ### ICINGA-CGI variables
   ####################################################
   $icingacgipackage = $::operatingsystem ? {
@@ -152,7 +152,7 @@ class icinga::params {
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'nagios-plugins-all',
     default                                => 'nagios-plugins',
   }
-  
+
   ### Application related parameters
 
   $package = $::operatingsystem ? {
