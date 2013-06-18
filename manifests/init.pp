@@ -345,8 +345,9 @@ class icinga (
 
   ### Managed resources
   package { 'nrpe-plugin':
-    ensure => $icinga::manage_package,
-    name   => $icinga::nrpepluginpackage,
+    ensure  => $icinga::manage_package,
+    name    => $icinga::nrpepluginpackage,
+    require => Package['icinga'], # this has to be installed after icinga, to avoid the Recommend:nagios3 pulling in the wrong server
   }
 
   package { 'icinga':
