@@ -1,16 +1,16 @@
 class icinga::cgi {
-
   require icinga
 
   package { 'icinga-gui':
     ensure  => $icinga::manage_package,
+    name    => $icinga::icingacgipackage,
     require => Package['icinga'],
   }
 
   # QUICK AND DIRTY
-  file { '/etc/icinga/apache2.conf':
+  file { $icinga::apache_icingacgi_config:
     ensure => link,
-    target => $icinga::apache_icingacgi_config,
+    target => $icinga::apache_icingacgi_target,
   }
 
 }

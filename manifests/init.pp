@@ -201,6 +201,7 @@ class icinga (
   $icingacgipackage            = params_lookup( 'icingacgipackage' ),
   $enable_icingacgi            = params_lookup( 'enable_icingacgi' ),
   $apache_icingacgi_config     = params_lookup( 'apache_icingacgi_config' ),
+  $apache_icingacgi_target     = params_lookup( 'apache_icingacgi_target' ),
   $check_external_commands     = params_lookup( 'check_external_commands' ),
   $plugins                     = params_lookup( 'plugins' ),
   $use_ssl                     = params_lookup( 'use_ssl' ),
