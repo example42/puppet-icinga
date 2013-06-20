@@ -84,6 +84,10 @@ class icinga::params {
     default                   => '/etc/httpd/conf.d/icinga.conf',
   }
 
+  $apache_icingacgi_target = $::operatingsystem ? {
+    default                   => '/etc/icinga/apache2.conf',
+  }
+
   ### ICINGA variables
   ####################################################
   $grouplogic = ''
