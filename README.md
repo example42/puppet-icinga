@@ -44,6 +44,17 @@ For detailed info about the logic and usage patterns of Example42 modules check 
           audit_only => true
         }
 
+* Enable icinga-web
+
+        class { '::icinga':
+          enable_idoutils           => true,
+          enable_icingaweb          => true,
+          manage_repos              => true,
+          enable_debian_repo_legacy => false,
+        }
+
+  The last option exists for legacy reasons only.
+
 
 ## USAGE - Overrides and Customizations
 * Use custom sources for main config file 
