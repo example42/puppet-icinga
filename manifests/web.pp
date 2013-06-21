@@ -1,9 +1,29 @@
+# = Class: icinga::web
+#
+# This class provides the Icinga-web functionality
+#
+# Rather than invoking this class directly, it should be invoked
+# via the main Icinga class. Generally, you should enable idoutils
+# for icinga-web to function.
+#
+# = Examples:
+#
+#  class { '::icinga':
+#    puppi                     => true,
+#    enable_idoutils           => true,
+#    enable_icingaweb          => true,
+#    enable_debian_repo_legacy => false,
+#    manage_repos              => true,
+#  }
+#
+#
 class icinga::web {
 
   require icinga::idoutils
 
   package { 'icinga-web':
-    ensure => $icinga::manage_package,
+    ensure  => $icinga::manage_package,
+    require => Class['icinga::repository'],
   }
 
   package { 'php-mysql':
@@ -11,18 +31,9 @@ class icinga::web {
     name   => $icinga::phpmysql_package,
   }
 
-  # QUICK AND DIRTY
-  file { '/etc/icinga-web/apache2.conf':
+  file { $icinga::apache_icingaweb_config:
     ensure => link,
-    target => $icinga::apache_icingaweb_config,
-  }
-
-  if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
-    apt::repository { 'icinga':
-      url        => 'http://icingabuild.dus.dg-i.net/',
-      distro     => "icinga-web-${::lsbdistcodename}",
-      repository => 'main',
-    }
+    target => '/etc/icinga-web/apache2.conf',
   }
 
   file { 'icingaweb.conf':
@@ -38,7 +49,7 @@ class icinga::web {
     audit   => $icinga::manage_audit,
   }
 
-  # The whole icinga-web configuration directory can be recursively overriden
+  # The whole icinga-web configuration directory can be overriden recursively
   if $icinga::source_dir_icingaweb {
     file { 'icingaweb.dir':
       ensure  => directory,
@@ -65,6 +76,17 @@ class icinga::web {
         mysql_privileges => 'ALL',
         mysql_host       => $icinga::db_host_icingaweb,
       }
+
+      if $::operatingsystem =~ /(?i:Ubuntu|Mint)/ {
+        mysql::queryfile { "icinga_web":
+          mysql_file => "/usr/share/dbconfig-common/data/icinga-web/install/mysql",
+          mysql_db         => $icinga::db_name_icingaweb,
+          mysql_user       => $icinga::db_user_icingaweb,
+          mysql_password   => $icinga::db_password_icingaweb,
+          require          => Mysql::Grant["icinga_web_grants_${::fqdn}"]
+        }
+      }
+
     }
     default: {
       # Automanagement of Mysql grants on external servers
@@ -77,6 +99,19 @@ class icinga::web {
         mysql_host       => $::fqdn,
         tag              => "mysql_grants_${icinga::db_host_icingaweb}",
       }
+
+      if $::operatingsystem =~ /(?i:Ubuntu|Mint)/ {
+        @@mysql::queryfile { "icinga_web_${::fqdn}":
+          mysql_file => "/usr/share/dbconfig-common/data/icinga-web/install/mysql",
+          mysql_db         => $icinga::db_name_icingaweb,
+          mysql_user       => $icinga::db_user_icingaweb,
+          mysql_password   => $icinga::db_password_icingaweb,
+          mysql_host       => $::fqdn,
+          tag              => "mysql_grants_${icinga::db_host_icingaweb}",
+          require          => Mysql::Grant["icinga_web_grants_${::fqdn}"]
+        }
+      }
+
     }
   }
 
