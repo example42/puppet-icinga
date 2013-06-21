@@ -229,6 +229,12 @@ class icinga::params {
     default => '/var/log/icinga/icinga.log',
   }
 
+  if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
+    $enable_debian_repo_legacy = true
+  } else {
+    $enable_debian_repo_legacy = false
+  }
+
   # General Settings
   $my_class = ''
   $source = ''

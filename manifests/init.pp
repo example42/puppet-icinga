@@ -159,6 +159,13 @@
 # [*log_file*]
 #   Log file(s). Used by puppi
 #
+# [*manage_repos*]
+#   Should the icinga software repositories be managed by us. Default: false
+#
+# [*enable_debian_repo_legacy*]
+#   If true, both Debian, Mint and Ubuntu will use the Debian repo,
+#   no matter the manage_repos value. Default: true
+#   This directive exists for legacy reasons only.
 #
 # == Examples
 #
@@ -249,7 +256,9 @@ class icinga (
   $pid_file                    = params_lookup( 'pid_file' ),
   $data_dir                    = params_lookup( 'data_dir' ),
   $log_dir                     = params_lookup( 'log_dir' ),
-  $log_file                    = params_lookup( 'log_file' )
+  $log_file                    = params_lookup( 'log_file' ),
+  $manage_repos                = params_lookup( 'manage_repos' ),
+  $enable_debian_repo_legacy   = params_lookup( 'enable_debian_repo_legacy' )
   ) inherits icinga::params {
 
   $bool_enable_icingaweb=any2bool($enable_icingaweb)
@@ -272,7 +281,16 @@ class icinga (
   $bool_puppi=any2bool($puppi)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
+  $bool_manage_repos = any2bool($manage_repos)
   $customconfigdir = "${config_dir}/auto.d"
+
+  if $enable_debian_repo_legacy == true and $bool_enable_icingaweb == true {
+    $bool_enable_debian_repo_legacy = true
+  } else {
+    $bool_enable_debian_repo_legacy = false
+  }
+
+  include ::icinga::repository
 
   ### Definition of some variables used in the module
   $manage_package = $icinga::bool_absent ? {
@@ -354,6 +372,7 @@ class icinga (
   package { 'icinga':
     ensure => $icinga::manage_package,
     name   => $icinga::package,
+    require => Class['icinga::repository'],
   }
 
   service { 'icinga':
@@ -480,6 +499,12 @@ class icinga (
   ### ICINGAWEB Installation
   if $icinga::bool_enable_icingaweb == true {
     include icinga::web
+  }
+
+  # The idoutils installer configures a database user that we
+  # blatantly override. Hence this order definition
+  if($icinga::bool_enable_icingaweb == true and $icinga::bool_enable_idoutils == true) {
+    Class ['::icinga::idoutils'] -> Class ['::icinga::web']
   }
 
   ### ICINGACGI Installation
