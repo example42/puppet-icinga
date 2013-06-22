@@ -145,6 +145,14 @@ class icinga::params {
     default => '/etc/icinga/htpasswd.users',
   }
 
+  $template_settings_templates   = 'icinga/settings/templates.cfg'
+  $template_commands_general     = 'icinga/commands/general.cfg'
+  $template_commands_extra       = 'icinga/commands/extra.cfg'
+  $template_commands_special     = 'icinga/commands/special.cfg'
+  $template_settings_contacts    = 'icinga/settings/contacts.cfg'
+  $template_settings_timeperiods = 'icinga/settings/timeperiods.cfg'
+  $template_hostgroups_all       = 'icinga/hostgroups/all.cfg'
+
   ### ICINGA variables
   ####################################################
   $nrpepluginpackage = $::operatingsystem ? {

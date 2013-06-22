@@ -165,7 +165,29 @@
 # [*enable_debian_repo_legacy*]
 #   If true, both Debian, Mint and Ubuntu will use the Debian repo,
 #   no matter the manage_repos value. Default: true
-#   This directive exists for legacy reasons only.
+#   This directive exists for legacy reasons only and
+#   should be set to false on new installs.
+#
+# [*template_settings_templates*]
+#   Template to use for icinga/settings/templates.cfg
+#
+# [*template_commands_general*]
+#   Template to use for icinga/commands/general.cfg
+#
+# [*template_commands_extra*]
+#   Template to use for icinga/commands/extra.cfg
+#
+# [*template_commands_special*]
+#   Template to use for icinga/commands/special.cfg
+#
+# [*template_settings_contacts*]
+#   Template to use for icinga/settings/contacts.cfg
+#
+# [*template_settings_timeperiods*]
+#   Template to use for icinga/settings/timeperiods.cfg
+#
+# [*template_hostgroups_all*]
+#   Template to use for icinga/hostgroups/all.cfg
 #
 # == Examples
 #
@@ -258,7 +280,14 @@ class icinga (
   $log_dir                     = params_lookup( 'log_dir' ),
   $log_file                    = params_lookup( 'log_file' ),
   $manage_repos                = params_lookup( 'manage_repos' ),
-  $enable_debian_repo_legacy   = params_lookup( 'enable_debian_repo_legacy' )
+  $enable_debian_repo_legacy   = params_lookup( 'enable_debian_repo_legacy' ),
+  $template_settings_templates = params_lookup( 'tempalte_settings_templates' ),
+  $template_commands_general   = params_lookup( 'template_commands_general' ),
+  $template_commands_extra     = params_lookup( 'template_commands_extra' ),
+  $template_commands_special   = params_lookup( 'template_commands_special' ),
+  $template_settings_contacts  = params_lookup( 'template_settings_contacts' ),
+  $template_settings_timeperiods = params_lookup( 'template_settings_timeperiods' ),
+  $template_hostgroups_all     = params_lookup( 'template_hostgroups_all' )
   ) inherits icinga::params {
 
   $bool_enable_icingaweb=any2bool($enable_icingaweb)
@@ -291,6 +320,7 @@ class icinga (
   }
 
   include ::icinga::repository
+  include ::apache
 
   ### Definition of some variables used in the module
   $manage_package = $icinga::bool_absent ? {
