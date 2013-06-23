@@ -8,6 +8,14 @@
 # Standard class parameters
 # Define the general class behaviour and customizations
 #
+# [*dependencies_class*]
+#   The name of the class that installs dependencies and prerequisite
+#   resources needed by this module.
+#   Default is $graylog2::dependencies which uses Example42 modules.
+#   Set to '' false to not install any dependency (you must provide what's
+#   defined in graylog2/manifests/dependencies.pp in some way).
+#   Set directy the name of a custom class to manage there the dependencies
+#
 # [*my_class*]
 #   Name of a custom class to autoload to manage module's customizations
 #   If defined, icinga class will automatically "include $my_class"
@@ -165,7 +173,29 @@
 # [*enable_debian_repo_legacy*]
 #   If true, both Debian, Mint and Ubuntu will use the Debian repo,
 #   no matter the manage_repos value. Default: true
-#   This directive exists for legacy reasons only.
+#   This directive exists for legacy reasons only and
+#   should be set to false on new installs.
+#
+# [*template_settings_templates*]
+#   Template to use for icinga/settings/templates.cfg
+#
+# [*template_commands_general*]
+#   Template to use for icinga/commands/general.cfg
+#
+# [*template_commands_extra*]
+#   Template to use for icinga/commands/extra.cfg
+#
+# [*template_commands_special*]
+#   Template to use for icinga/commands/special.cfg
+#
+# [*template_settings_contacts*]
+#   Template to use for icinga/settings/contacts.cfg
+#
+# [*template_settings_timeperiods*]
+#   Template to use for icinga/settings/timeperiods.cfg
+#
+# [*template_hostgroups_all*]
+#   Template to use for icinga/hostgroups/all.cfg
 #
 # == Examples
 #
@@ -181,6 +211,7 @@
 #
 class icinga (
   # $grouplogic          = params_lookup( 'grouplogic' ),
+  $dependencies_class          = params_lookup( 'dependencies_class' ),
   $enable_icingaweb            = params_lookup( 'enable_icingaweb' ),
   $template_icingaweb          = params_lookup( 'template_icingaweb' ),
   $source_dir_icingaweb        = params_lookup( 'source_dir_icingaweb' ),
@@ -258,7 +289,14 @@ class icinga (
   $log_dir                     = params_lookup( 'log_dir' ),
   $log_file                    = params_lookup( 'log_file' ),
   $manage_repos                = params_lookup( 'manage_repos' ),
-  $enable_debian_repo_legacy   = params_lookup( 'enable_debian_repo_legacy' )
+  $enable_debian_repo_legacy   = params_lookup( 'enable_debian_repo_legacy' ),
+  $template_settings_templates = params_lookup( 'tempalte_settings_templates' ),
+  $template_commands_general   = params_lookup( 'template_commands_general' ),
+  $template_commands_extra     = params_lookup( 'template_commands_extra' ),
+  $template_commands_special   = params_lookup( 'template_commands_special' ),
+  $template_settings_contacts  = params_lookup( 'template_settings_contacts' ),
+  $template_settings_timeperiods = params_lookup( 'template_settings_timeperiods' ),
+  $template_hostgroups_all     = params_lookup( 'template_hostgroups_all' )
   ) inherits icinga::params {
 
   $bool_enable_icingaweb=any2bool($enable_icingaweb)
@@ -289,8 +327,6 @@ class icinga (
   } else {
     $bool_enable_debian_repo_legacy = false
   }
-
-  include ::icinga::repository
 
   ### Definition of some variables used in the module
   $manage_package = $icinga::bool_absent ? {
@@ -451,6 +487,10 @@ class icinga (
   ### Include custom class if $my_class is set
   if $icinga::my_class {
     include $icinga::my_class
+  }
+  
+  if $icinga::dependencies_class != '' {
+    include $icinga::dependencies_class
   }
 
 

@@ -75,3 +75,75 @@ define service {
     use                 <%= @use %>
 }
 <% end -%>
+
+<% if scope.lookupvar("nrpe::enable_sysstat") -%>
+define service {
+    host_name           <%= @host_name %>
+    service_description Pagestat
+    check_command       check_nrpe!check_sar_pagestat!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description CPU
+    check_command       check_nrpe!check_sar_cpu!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Memory_Util
+    check_command       check_nrpe!check_sar_memory_util!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Memory_Stat
+    check_command       check_nrpe!check_sar_memory_stat!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description IO_Transfer
+    check_command       check_nrpe!check_sar_io_transfer!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Queueln_Load
+    check_command       check_nrpe!check_sar_queueln_load!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Swap_Util
+    check_command       check_nrpe!check_sar_swap_util!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Swap_Stat
+    check_command       check_nrpe!check_sar_swap_stat!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Task
+    check_command       check_nrpe!check_sar_task!noarg
+    use                 <%= @use %>
+}
+
+define service {
+    host_name           <%= @host_name %>
+    service_description Kernel
+    check_command       check_nrpe!check_sar_kernel!noarg
+    use                 <%= @use %>
+}
+<% end -%>
