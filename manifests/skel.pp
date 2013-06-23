@@ -177,11 +177,13 @@ class icinga::skel {
 
   # icinga group needs permission to write in /var/lib/icinga/rw
   if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
-    file { '/var/lib/icinga/rw':
+    @file { '/var/lib/icinga/rw':
       ensure  => directory,
       mode    => '0770',
       require => Package['icinga'],
     }
+
+    realize ( File['/var/lib/icinga/rw'] )
   }
 
 }
