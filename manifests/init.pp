@@ -290,7 +290,7 @@ class icinga (
   $log_file                    = params_lookup( 'log_file' ),
   $manage_repos                = params_lookup( 'manage_repos' ),
   $enable_debian_repo_legacy   = params_lookup( 'enable_debian_repo_legacy' ),
-  $template_settings_templates = params_lookup( 'tempalte_settings_templates' ),
+  $template_settings_templates = params_lookup( 'template_settings_templates' ),
   $template_commands_general   = params_lookup( 'template_commands_general' ),
   $template_commands_extra     = params_lookup( 'template_commands_extra' ),
   $template_commands_special   = params_lookup( 'template_commands_special' ),
