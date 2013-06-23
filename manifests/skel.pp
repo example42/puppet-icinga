@@ -96,7 +96,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
-    content => template('icinga/commands/general.cfg'),
+    content => template($icinga::template_commands_general),
   }
 
   file { 'icinga_commands_extra.cfg':
@@ -106,7 +106,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
-    content => template('icinga/commands/extra.cfg'),
+    content => template($icinga::template_commands_extra),
   }
 
   file { 'icinga_commands_special.cfg':
@@ -116,7 +116,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
-    content => template('icinga/commands/special.cfg'),
+    content => template($icinga::template_commands_special),
   }
 
   file { 'icinga_contacts.cfg':
@@ -126,7 +126,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
-    content => template('icinga/settings/contacts.cfg'),
+    content => template($icinga::template_settings_contacts),
   }
 
   file { 'icinga_timeperiods.cfg':
@@ -136,7 +136,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
-    content => template('icinga/settings/timeperiods.cfg'),
+    content => template($icinga::template_settings_timeperiods),
   }
 
   file { 'icinga_templates.cfg':
@@ -146,7 +146,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
-    content => template('icinga/settings/templates.cfg'),
+    content => template($icinga::template_settings_templates),
   }
 
   $alldefault_ensure = $::icinga_hostgrouplogic ? {
@@ -161,7 +161,7 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_hostgroups'],
-    content => template('icinga/hostgroups/all.cfg'),
+    content => template($icinga::template_hostgroups_all),
   }
 
   # Htpasswd file (Defaultuser icingaadmin:example42)
