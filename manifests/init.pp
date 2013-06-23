@@ -8,6 +8,14 @@
 # Standard class parameters
 # Define the general class behaviour and customizations
 #
+# [*dependencies_class*]
+#   The name of the class that installs dependencies and prerequisite
+#   resources needed by this module.
+#   Default is $graylog2::dependencies which uses Example42 modules.
+#   Set to '' false to not install any dependency (you must provide what's
+#   defined in graylog2/manifests/dependencies.pp in some way).
+#   Set directy the name of a custom class to manage there the dependencies
+#
 # [*my_class*]
 #   Name of a custom class to autoload to manage module's customizations
 #   If defined, icinga class will automatically "include $my_class"
@@ -203,6 +211,7 @@
 #
 class icinga (
   # $grouplogic          = params_lookup( 'grouplogic' ),
+  $dependencies_class          = params_lookup( 'dependencies_class' ),
   $enable_icingaweb            = params_lookup( 'enable_icingaweb' ),
   $template_icingaweb          = params_lookup( 'template_icingaweb' ),
   $source_dir_icingaweb        = params_lookup( 'source_dir_icingaweb' ),
@@ -318,9 +327,6 @@ class icinga (
   } else {
     $bool_enable_debian_repo_legacy = false
   }
-
-  include ::icinga::repository
-  include ::apache
 
   ### Definition of some variables used in the module
   $manage_package = $icinga::bool_absent ? {
@@ -481,6 +487,10 @@ class icinga (
   ### Include custom class if $my_class is set
   if $icinga::my_class {
     include $icinga::my_class
+  }
+  
+  if $icinga::dependencies_class != '' {
+    include $icinga::dependencies_class
   }
 
 

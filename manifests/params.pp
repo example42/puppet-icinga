@@ -14,6 +14,8 @@
 #
 class icinga::params {
 
+  $dependencies_class    = 'icinga::dependencies'
+
   ### ICINGA-WEB variables
   ####################################################
   $enable_icingaweb = false

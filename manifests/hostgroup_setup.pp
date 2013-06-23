@@ -25,5 +25,4 @@ class icinga::hostgroup_setup {
     content => template('icinga/icinga_build_hostgroups.sh'),
   }
 
-
 }
