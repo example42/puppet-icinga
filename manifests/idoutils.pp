@@ -32,6 +32,16 @@ class icinga::idoutils {
     audit   => $icinga::manage_audit,
   }
 
+  file { 'idoutils.cfg':
+    ensure  => present,
+    path    => '/etc/icinga/modules/idoutils.cfg',
+    content => template('icinga/modules/idoutils.cfg'),
+    require => Package['icinga-idoutils'],
+    notify  => Service['ido2db'],
+#    notify  => [ Service['ido2db'], Service['icinga'] ],
+    replace => $icinga::manage_file_replace,
+    audit   => $icinga::manage_audit,
+  }
 
   # Grants Management (Currently only Mysql backend is supported)
   case $icinga::db_host_idoutils {
