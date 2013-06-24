@@ -20,7 +20,7 @@ class icinga::dependencies {
   if $icinga::manage_package {
     include ::apache
   }
-  
+
   include ::icinga::repository
 
 }

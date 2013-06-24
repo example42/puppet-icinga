@@ -504,6 +504,12 @@ class icinga (
     }
   }
 
+  if $::operatingsystem =~ /(?i:Debian|Ubuntu|Mint)/ {
+    file{ 'icinga_service_config':
+      path    => '/etc/default/icinga',
+      content => template( 'icinga/debian_service_config.erb' )
+    }
+  }
 
   ### Service monitoring, if enabled ( monitor => true )
   if $icinga::bool_monitor == true {

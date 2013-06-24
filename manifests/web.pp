@@ -65,7 +65,6 @@ class icinga::web {
     }
   }
 
-
   # Grants Management (Currently only Mysql backend is supported)
   case $icinga::db_host_icingaweb {
     'localhost','127.0.0.1': {
