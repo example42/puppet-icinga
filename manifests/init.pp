@@ -222,6 +222,7 @@ class icinga (
   $config_file_owner_icingaweb = params_lookup( 'config_file_owner_icingaweb' ),
   $config_file_group_icingaweb = params_lookup( 'config_file_group_icingaweb' ),
   $apache_icingaweb_config     = params_lookup( 'apache_icingaweb_config' ),
+  $apache_icingaweb_target     = params_lookup( 'apache_icingaweb_target' ),
   $db_host_icingaweb           = params_lookup( 'db_host_icingaweb' ),
   $db_name_icingaweb           = params_lookup( 'db_name_icingaweb' ),
   $db_user_icingaweb           = params_lookup( 'db_user_icingaweb' ),
