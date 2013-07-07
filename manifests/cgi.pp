@@ -11,6 +11,7 @@ class icinga::cgi {
   file { $icinga::apache_icingacgi_config:
     ensure => link,
     target => $icinga::apache_icingacgi_target,
+    notify => Service['apache']
   }
 
 }
