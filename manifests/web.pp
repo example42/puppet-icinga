@@ -33,7 +33,8 @@ class icinga::web {
 
   file { $icinga::apache_icingaweb_config:
     ensure => link,
-    target => '/etc/icinga-web/apache2.conf',
+    target => $icinga::apache_icingaweb_target,
+    notify => Service['apache']
   }
 
   file { 'icingaweb.conf':
