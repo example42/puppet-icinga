@@ -297,7 +297,12 @@ class icinga (
   $template_commands_special   = params_lookup( 'template_commands_special' ),
   $template_settings_contacts  = params_lookup( 'template_settings_contacts' ),
   $template_settings_timeperiods = params_lookup( 'template_settings_timeperiods' ),
-  $template_hostgroups_all     = params_lookup( 'template_hostgroups_all' )
+  $template_hostgroups_all     = params_lookup( 'template_hostgroups_all' ),
+  $magic_tag                   = params_lookup(' magic_tag '),
+  $eventhandler_dir            = params_lookup('eventhandler_dir'),
+  $ocsp_command                = params_lookup( 'ocsp_command' ),
+  $config_enable_notifications = params_lookup( 'config_enable_notifications' ),
+  $config_obsess_over_services = params_lookup( 'config_obsess_over_services' ),
   ) inherits icinga::params {
 
   $bool_enable_icingaweb=any2bool($enable_icingaweb)
@@ -452,7 +457,13 @@ class icinga (
 
   # Include configuration directories and files
   include icinga::skel
-  include icinga::target
+  if ! $magic_tag {
+    include icinga::object::params
+    $use_magic_tag = $icinga::object::params::magic_tag
+  } else {
+    $use_magic_tag = $magic_tag
+  }
+  
   # Collects all the stored configs regarding icinga
   # Host/Service Checks aggregation policy is based on $::icinga_filemode
   case $::icinga_filemode {
@@ -460,19 +471,19 @@ class icinga (
       # One file per host with all the relevant services in auto.d/hosts
       # Concatenated with puppetlabs-concat
       include concat::setup
-      Concat <<| tag == "icinga_check_${icinga::target::magic_tag}" |>>
-      Concat::Fragment <<| tag == "icinga_check_${icinga::target::magic_tag}" |>>
+      Concat <<| tag == "icinga_check_${use_magic_tag}" |>>
+      Concat::Fragment <<| tag == "icinga_check_${use_magic_tag}" |>>
     }
     'pupmod-concat': {
       # One file per host with all the relevant services in auto.d/hosts
       # Concatenated with onyxpoint-pupmod-concat
-      Concat_build <<| tag == "icinga_check_${icinga::target::magic_tag}" |>>
-      Concat_fragment <<| tag == "icinga_check_${icinga::target::magic_tag}" |>>
+      Concat_build <<| tag == "icinga_check_${use_magic_tag}" |>>
+      Concat_fragment <<| tag == "icinga_check_${use_magic_tag}" |>>
     }
     default: {
       # One file per host auto.d/hosts
       # One file per service auto.d/services
-      File <<| tag == "icinga_check_${icinga::target::magic_tag}" |>>
+      File <<| tag == "icinga_check_${use_magic_tag}" |>>
     }
   }
 
@@ -482,7 +493,7 @@ class icinga (
     #Concat <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
     #Concat::Fragment <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
     include icinga::hostgroup_setup
-    File <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
+    File <<| tag == "icinga_hostgroup_${use_magic_tag}" |>>
   }
 
   ### Include custom class if $my_class is set

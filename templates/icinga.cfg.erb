@@ -143,7 +143,11 @@ accept_passive_service_checks=1
 accept_passive_host_checks=1
 
 # NOTIFICATIONS OPTION
+<% if scope.lookupvar('icinga::enable_notifications') -%>
 enable_notifications=1
+<% else -%>
+enable_notifications=0
+<% end -%>
 enable_event_handlers=1
 
 # PROCESS PERFORMANCE DATA OPTIONS
@@ -163,8 +167,16 @@ process_performance_data=0
 
 
 # OBSESS OVER SERVICE CHECKS OPTION - NEEDED TO SEND CHECKS RESULTS VIA NSCA
+<% if scope.lookupvar('icinga::config_obsess_over_services') -%>
+obsess_over_services=1
+<% else -%>
 obsess_over_services=0
+<% end -%>
+<% if scope.lookupvar('icinga::ocsp_command') -%>
+ocsp_command=<%= scope.lookupvar('icinga::ocsp_command') %>
+<% else -%>
 #ocsp_command=somecommand
+<% end -%>
 obsess_over_hosts=0
 #ochp_command=somecommand
 <% if scope.lookupvar('icinga::version') != "2" -%>

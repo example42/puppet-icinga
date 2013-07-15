@@ -6,27 +6,37 @@
 class icinga::repository {
 
   if ( $::icinga::bool_enable_debian_repo_legacy != true and
-       $::operatingsystem =~ /(?i:Ubuntu|Mint)/ and
        $::icinga::bool_manage_repos == true
   ) {
-    # The repos as suggested by icinga:
-    # https://wiki.icinga.org/display/howtos/Setting+up+Icinga+Web+on+Ubuntu
-    #
-    apt::repository { 'icinga-web':
-      url        => 'http://ppa.launchpad.net/formorer/icinga-web/ubuntu',
-      distro     => 'precise',
-      repository => 'main',
-    }
+    case $::operatingsystem {
+       ubuntu,mint: {
+        # The repos as suggested by icinga:
+        # https://wiki.icinga.org/display/howtos/Setting+up+Icinga+Web+on+Ubuntu
+        #
+        apt::repository { 'icinga-web':
+          url        => 'http://ppa.launchpad.net/formorer/icinga-web/ubuntu',
+          distro     => 'precise',
+          repository => 'main',
+        }
+        apt::repository { 'icinga':
+          url        => 'http://ppa.launchpad.net/formorer/icinga/ubuntu',
+          distro     => 'precise',
+          repository => 'main',
+        }
 
-    apt::repository { 'icinga':
-      url        => 'http://ppa.launchpad.net/formorer/icinga/ubuntu',
-      distro     => 'precise',
-      repository => 'main',
-    }
+        apt::key { 'icinga':
+          keyserver => 'keyserver.ubuntu.com',
+          fingerprint => '36862847',
+        }
+      }
 
-    apt::key { 'icinga':
-      keyserver => 'keyserver.ubuntu.com',
-      fingerprint => '36862847',
+      centos,redhat,scientific,fedora: {
+        include yum::repo::repoforge
+
+        Yum::Managed_yumrepo[ 'repoforge' ] -> Package['icinga']
+      }
+
+      default: {}
     }
   }
 

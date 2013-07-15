@@ -12,17 +12,26 @@ define icinga::baseservices (
   $service_description = '',
   $use                 = 'generic-service',
   $template            = 'icinga/baseservices.erb',
-  $ensure              = 'present'
+  $ensure              = 'present',
+  $magic_tag           = undef,
   ) {
 
-  include icinga::target
+  include icinga::object::params
+
+  $customconfigdir = $icinga::object::params::configdir
+
+  if $magic_tag {
+    $use_magic_tag = $magic_tag
+  } else {
+    $use_magic_tag = $icinga::object::params::magic_tag
+  }
 
   case $::icinga_filemode {
 
     'concat': {
       if $ensure == 'present' {
-        @@concat::fragment { "icinga-${host_name}-baseservices":
-          target  => "${icinga::target::customconfigdir}/hosts/${host_name}.cfg",
+        @@concat::fragment { "icinga-${name}-baseservices":
+          target  => "${customconfigdir}/hosts/${name}.cfg",
           order   => 02,
           notify  => Service['icinga'],
           content => template( $template ),
@@ -33,21 +42,21 @@ define icinga::baseservices (
 
     'pupmod-concat': {
       if $ensure == 'present' {
-        @@concat_fragment { "icinga-${host_name}+100_baseservices.tmp":
+        @@concat_fragment { "icinga-${name}+100_baseservices.tmp":
           content => template( $template ),
         }
       }
     }
 
     default: {
-      @@file { "${icinga::target::customconfigdir}/services/${host_name}-00-baseservices.cfg":
+      @@file { "${customconfigdir}/services/${name}-00-baseservices.cfg":
         ensure  => $ensure,
         mode    => '0644',
         owner   => 'root',
         group   => 'root',
         notify  => Service['icinga'],
         content => template( $template ),
-        tag     => "icinga_check_${icinga::target::magic_tag}",
+        tag     => "icinga_check_${use_magic_tag}",
       }
     }
 

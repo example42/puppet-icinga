@@ -17,9 +17,7 @@ define icinga::service (
   $ensure              = 'present'
   ) {
 
-  # Autoinclude the target host class
-  # (each service must have a defined host)
-  include icinga::target
+  include icinga::object::params
 
   # Set defaults based on the same define $name
   $real_check_command = $check_command ? {
@@ -37,7 +35,7 @@ define icinga::service (
     'concat': {
       if $ensure == 'present' {
         @@concat::fragment { "icinga-${host_name}-${name}":
-          target  => "${icinga::target::customconfigdir}/hosts/${host_name}.cfg",
+          target  => "${icinga::object::params::configdir}/hosts/${host_name}.cfg",
           order   => 05,
           notify  => Service['icinga'],
           content => template( $template ),
@@ -55,7 +53,7 @@ define icinga::service (
     }
 
     default: {
-      @@file { "${icinga::target::customconfigdir}/services/${host_name}-${name}.cfg":
+      @@file { "${icinga::object::params::configdir}/services/${host_name}-${name}.cfg":
         ensure  => $ensure,
         mode    => '0644',
         owner   => 'root',

@@ -97,6 +97,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
     content => template($icinga::template_commands_general),
+    notify  => Service['icinga']
   }
 
   file { 'icinga_commands_extra.cfg':
@@ -107,6 +108,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
     content => template($icinga::template_commands_extra),
+    notify  => Service['icinga']
   }
 
   file { 'icinga_commands_special.cfg':
@@ -117,6 +119,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_commands'],
     content => template($icinga::template_commands_special),
+    notify  => Service['icinga']
   }
 
   file { 'icinga_contacts.cfg':
@@ -127,6 +130,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
     content => template($icinga::template_settings_contacts),
+    notify  => Service['icinga']
   }
 
   file { 'icinga_timeperiods.cfg':
@@ -137,6 +141,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
     content => template($icinga::template_settings_timeperiods),
+    notify  => Service['icinga']
   }
 
   file { 'icinga_templates.cfg':
@@ -147,6 +152,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_settings'],
     content => template($icinga::template_settings_templates),
+    notify  => Service['icinga']
   }
 
   $alldefault_ensure = $::icinga_hostgrouplogic ? {
@@ -162,6 +168,7 @@ class icinga::skel {
     group   => $icinga::config_file_group,
     require => File['icinga_configdir_hostgroups'],
     content => template($icinga::template_hostgroups_all),
+    notify  => Service['icinga']
   }
 
   # Htpasswd file (Defaultuser icingaadmin:example42)
@@ -172,6 +179,16 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     content => template($icinga::template_htpasswdfile),
+    require => Package['icinga'],
+  }
+  
+  file { 'icinga_nsca_cmd':
+    ensure  => $icinga::manage_file,
+    path    => "${icinga::eventhandler_dir}/nsca_send_result",
+    mode    => '0755',
+    owner   => $icinga::config_file_owner,
+    group   => $icinga::config_file_group,
+    content => template('icinga/commands/nsca_send_result.erb'),
     require => Package['icinga'],
   }
 

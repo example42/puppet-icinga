@@ -14,10 +14,10 @@ class icinga::dependencies {
   include icinga
 
   # Both the traditional Icinga as well as Icinga-Web gui's utilize
-  # Apache Http to serve their frontend. Even if the packaging provide
+  # Apache Http to serve their frontend. Even if the packaging provides
   # Apache Http as a dependency, including this package ensures it can
   # also be monitored.
-  if $icinga::manage_package {
+  if $icinga::manage_package and ($icinga::enable_icingaweb or $icinga::enable_icingacgi) {
     include ::apache
   }
 

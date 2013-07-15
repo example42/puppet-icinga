@@ -51,6 +51,14 @@ class icinga::params {
     /(?i:RedHat|Centos|Scientific|Fedora)/ => 'php-mysql',
     default                                => 'php5-mysql',
   }
+  
+  $eventhandler_dir = $::architecture ? {
+    'x86_64'  => '/usr/lib64/icinga/eventhandlers',
+    default   => '/usr/lib/icinga/eventhandlers'
+  }
+  
+  $config_enable_notifications = true
+  $config_obsess_over_services = false
 
   ## ICINGA IDOUTILS variables
   ####################################################
