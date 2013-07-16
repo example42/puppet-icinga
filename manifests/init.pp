@@ -482,7 +482,7 @@ class icinga (
     #Concat <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
     #Concat::Fragment <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
     include icinga::hostgroup_setup
-    File <<| tag == "icinga_hostgroup_${icinga::target::magic_tag}" |>>
+    File <<| tag == "icinga_hostgroup_${icinga::target::magic_hostgroup}" |>>
   }
 
   ### Include custom class if $my_class is set

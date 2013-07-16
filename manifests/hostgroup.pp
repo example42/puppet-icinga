@@ -19,7 +19,7 @@ define icinga::hostgroup (
     ensure  => $ensure,
     path    => "${icinga::target::hostgroupsbuilddir}/${hostgroup},${name}",
     notify  => Exec['hostgroups_build'],
-    tag     => "icinga_hostgroup_${icinga::target::magic_tag}",
+    tag     => "icinga_hostgroup_${icinga::target::magic_hostgroup}",
   }
 
 }
