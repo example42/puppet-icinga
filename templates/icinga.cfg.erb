@@ -112,7 +112,6 @@ retain_state_information=1
 state_retention_file=<%= scope.lookupvar('icinga::retentionfile') %>
 retention_update_interval=60
 use_retained_program_state=1
-<% if scope.lookupvar('icinga::version') != "2" -%>
 use_retained_scheduling_info=1
 retained_host_attribute_mask=0
 retained_service_attribute_mask=0
@@ -120,17 +119,14 @@ retained_process_host_attribute_mask=0
 retained_process_service_attribute_mask=0
 retained_contact_host_attribute_mask=0
 retained_contact_service_attribute_mask=0
-<% end -%>
 
 
 # INTERVAL LENGTH
 interval_length=60
 
-<% if scope.lookupvar('icinga::version') != "2" -%>
 # CHECK FOR UPDATES
 check_for_updates=1
 bare_update_check=0
-<% end -%>
 
 
 # CHECKS OPTIONS AT STARTUP
@@ -167,17 +163,13 @@ obsess_over_services=0
 #ocsp_command=somecommand
 obsess_over_hosts=0
 #ochp_command=somecommand
-<% if scope.lookupvar('icinga::version') != "2" -%>
 translate_passive_host_checks=0
 passive_host_checks_are_soft=0
-<% end -%>
 
 
 # ORPHANED HOST/SERVICE CHECK OPTIONS
 check_for_orphaned_services=1
-<% if scope.lookupvar('icinga::version') != "2" -%>
 check_for_orphaned_hosts=1
-<% end -%>
 
 
 # CHECKS FRESHNESS OPTIONS
@@ -185,9 +177,7 @@ check_service_freshness=1
 service_freshness_check_interval=60
 check_host_freshness=0
 host_freshness_check_interval=60
-<% if scope.lookupvar('icinga::version') != "2" -%>
 additional_freshness_latency=15
-<% end -%>
 
 
 # FLAP DETECTION OPTIONS
@@ -205,10 +195,8 @@ date_format=iso8601
 
 # P1.PL FILE LOCATION
 p1_file=<%= scope.lookupvar('icinga::p1file') %>
-<% if scope.lookupvar('icinga::version') != "2" -%>
 enable_embedded_perl=0
 use_embedded_perl_implicitly=1
-<% end -%>
 
 
 # ILLEGAL STUFF - SECURITY FILTERS
@@ -229,7 +217,6 @@ admin_pager=pageroot@localhost
 # DAEMON CORE DUMP OPTION
 daemon_dumps_core=0
 
-<% if scope.lookupvar('icinga::version') != "2" -%>
 # LARGE INSTALLATION TWEAKS OPTION
 use_large_installation_tweaks=0
 
@@ -246,4 +233,3 @@ debug_level=0
 debug_verbosity=1
 debug_file=<%= scope.lookupvar('icinga::log_dir') %>/icinga.debug
 max_debug_file_size=1000000
-<% end -%>
