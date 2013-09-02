@@ -36,9 +36,6 @@ class icinga::target ($host_template = 'generic-host', $host_parent = '', $autom
     icinga::baseservices { $::fqdn: use => 'generic-service', }
   }
 
-  # TODO: Make this work with nagios::plugins
-  # include icinga::plugins
-
   # Automatic hostgroup management
   if $::icinga_hostgrouplogic {
     icinga::hostgroup { $::fqdn: hostgroup => $magic_hostgroup, }
