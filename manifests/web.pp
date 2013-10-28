@@ -30,11 +30,11 @@ class icinga::web {
     ensure => $icinga::manage_package,
     name   => $icinga::phpmysql_package,
   }
-
+    
   file { $icinga::apache_icingaweb_config:
-    ensure => link,
-    target => $icinga::apache_icingaweb_target,
-    notify => Service['apache']
+    ensure => present,
+    notify => Service['apache'],
+    require => Package['icinga-web'],
   }
 
   file { 'icingaweb.conf':
