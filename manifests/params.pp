@@ -105,7 +105,7 @@ class icinga::params {
   $use_ssl = true
 
   $cachedir = $::operatingsystem ? {
-    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga/',
+    /(?i:RedHat|Centos|Scientific|Fedora)/ => '/var/spool/icinga',
     default                                => '/var/cache/icinga',
   }
 
