@@ -11,7 +11,10 @@ define icinga::baseservices (
   $host_name           = $fqdn,
   $service_description = '',
   $use                 = 'generic-service',
-  $template            = 'icinga/baseservices.erb',
+  $template            = $osfamily ? {
+    windows => 'icinga/baseserviceswin.erb',
+    default => 'icinga/baseservices.erb',
+  },
   $ensure              = 'present'
   ) {
 
