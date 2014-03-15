@@ -1,0 +1,40 @@
+
+# CPU load
+define service {
+    host_name           <%= @host_name %>
+    service_description CPU Load
+    check_command       check_nrpe!alias_cpu!noarg
+    use                 <%= @use %>
+}
+
+#Memory Use
+define service {
+    host_name           <%= @host_name %>
+    service_description Mem Use
+    check_command       check_nrpe!alias_mem!noarg
+    use                 <%= @use %>
+}
+
+# Free space
+define service {
+    host_name           <%= @host_name %>
+    service_description Free Space
+    check_command       check_nrpe!alias_disk!noarg
+    use                 <%= @use %>
+}
+
+# Updates
+define service {
+    host_name           <%= @host_name %>
+    service_description Updates
+    check_command       check_nrpe_240!alias_updates!noarg
+    use                 <%= @use %>
+}
+
+# Uptime
+define service {
+    host_name           <%= @host_name %>
+    service_description Uptime
+    check_command       check_nrpe!alias_up!noarg
+    use                 <%= @use %>
+}
