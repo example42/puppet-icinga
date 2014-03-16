@@ -118,14 +118,14 @@ define service {
     check_command       check_nrpe!check_sar_queueln_load!noarg
     use                 <%= @use %>
 }
-
+<% unless (scope.lookupvar("osfamily") == "RedHat" and scope.lookupvar("lsbmajdistrelease").to_i < 6) %>
 define service {
     host_name           <%= @host_name %>
     service_description Swap_Util
     check_command       check_nrpe!check_sar_swap_util!noarg
     use                 <%= @use %>
 }
-
+<% end %>
 define service {
     host_name           <%= @host_name %>
     service_description Swap_Stat
