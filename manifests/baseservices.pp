@@ -11,14 +11,19 @@ define icinga::baseservices (
   $host_name           = $fqdn,
   $service_description = '',
   $use                 = 'generic-service',
-  $template            = $osfamily ? {
-    windows => 'icinga/baseserviceswin.erb',
-    default => 'icinga/baseservices.erb',
-  },
+  $template            = '',
   $ensure              = 'present'
   ) {
 
   include icinga::target
+
+  $real_template = $template ? {
+    ''      => $::osfamily ? {
+      windows => 'icinga/baseserviceswin.erb',
+      default => 'icinga/baseservices.erb',
+    },
+    default => $template,
+  }
 
   case $::icinga_filemode {
 
@@ -28,7 +33,7 @@ define icinga::baseservices (
           target  => "${icinga::target::customconfigdir}/hosts/${host_name}.cfg",
           order   => 02,
           notify  => Service['icinga'],
-          content => template( $template ),
+          content => template( $real_template ),
           tag     => "icinga_check_${icinga::target::magic_tag}",
         }
       }
@@ -37,7 +42,7 @@ define icinga::baseservices (
     'pupmod-concat': {
       if $ensure == 'present' {
         @@concat_fragment { "icinga-${host_name}+100_baseservices.tmp":
-          content => template( $template ),
+          content => template( $real_template ),
         }
       }
     }
@@ -49,7 +54,7 @@ define icinga::baseservices (
         owner   => 'root',
         group   => 'root',
         notify  => Service['icinga'],
-        content => template( $template ),
+        content => template( $real_template ),
         tag     => "icinga_check_${icinga::target::magic_tag}",
       }
     }

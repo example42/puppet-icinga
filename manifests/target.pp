@@ -32,8 +32,15 @@ class icinga::target ($host_template = 'generic-host', $host_parent = '', $autom
     }
   }
 
+  $baseservices_template = $::icinga_baseservices_template ? {
+    undef   => '',
+    default => $::icinga_baseservices_template,
+  }
   if ($automatic_services) {
-    icinga::baseservices { $::fqdn: use => 'generic-service', }
+    icinga::baseservices { $::fqdn:
+      use      => 'generic-service',
+      template => $baseservices_template,
+    }
   }
 
   # TODO: Make this work with nagios::plugins

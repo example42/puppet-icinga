@@ -84,6 +84,16 @@ For detailed info about the logic and usage patterns of Example42 modules check 
         }
 
 
+## USAGE - Special top scope variables
+
+Some special variables can be set at top scope to manage some module's behaviours on all the monitored hosts:
+
+* Optional baseservices template
+
+        $icinga_baseservices_template = 'example42/icinga/baseservices.erb'
+
+
+
 ## USAGE - Example42 extensions management 
 * Activate puppi (recommended, but disabled by default)
 
