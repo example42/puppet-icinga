@@ -151,7 +151,7 @@ class icinga::skel {
 
   $alldefault_ensure = $::icinga_hostgrouplogic ? {
     ''      => present,
-    default => absent,
+    default => present,
   }
 
   file { 'icinga_hostgroup_alldefault.cfg':
