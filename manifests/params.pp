@@ -14,6 +14,8 @@
 #
 class icinga::params {
 
+  $extra_dir_source = undef
+
   $dependencies_class    = 'icinga::dependencies'
 
   ### ICINGA-WEB variables

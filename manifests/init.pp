@@ -211,6 +211,7 @@
 #
 class icinga (
   # $grouplogic          = params_lookup( 'grouplogic' ),
+  $extra_dir_source            = params_lookup( 'extra_dir_source' ),
   $dependencies_class          = params_lookup( 'dependencies_class' ),
   $enable_icingaweb            = params_lookup( 'enable_icingaweb' ),
   $template_icingaweb          = params_lookup( 'template_icingaweb' ),

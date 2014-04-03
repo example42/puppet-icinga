@@ -77,7 +77,10 @@ class icinga::skel {
     owner   => $icinga::config_file_owner,
     group   => $icinga::config_file_group,
     require => File['icinga_configdir'],
+    source  => $icinga::extra_dir_source,
+    recurse => true,
   }
+
 
   file { 'icinga_modulesdir':
     ensure  => directory,
