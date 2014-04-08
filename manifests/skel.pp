@@ -183,6 +183,8 @@ class icinga::skel {
     @file { '/var/lib/icinga/rw':
       ensure  => directory,
       mode    => '0770',
+      owner   => $icinga::process_user,
+      group   => $icinga::process_user,
       require => Package['icinga'],
     }
 
