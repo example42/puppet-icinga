@@ -13,7 +13,7 @@
 #
 define icinga::host (
   $ip            = $fqdn,
-  $short_alias   = $fqdn,
+  $short_alias   = $hostname,
   $use           = 'generic-host',
   $host_parent   = '',
   $ensure        = 'present',

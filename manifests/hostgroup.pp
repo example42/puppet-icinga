@@ -1,6 +1,6 @@
 # Define icinga::hostgroup
 #
-# Use this to populate hostgroups
+# Use this to populate hostgroups from hosts
 # This is an exported resource.
 # It should be included on the nodes to be monitored
 # but has effects on the icinga server

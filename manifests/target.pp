@@ -17,6 +17,9 @@ class icinga::target ($host_template = 'generic-host', $host_parent = '', $autom
     default => $::icinga_customconfigdir,
   }
 
+  $bool_automatic_host = any2bool($automatic_host)
+  $bool_automatic_services = any2bool($automatic_services)
+
   $hostgroupsbuilddir = '/etc/icinga/hostgroups_build'
 
   # TODO: Find a smarter solution that doesn't require TopScope Variables
@@ -25,7 +28,7 @@ class icinga::target ($host_template = 'generic-host', $host_parent = '', $autom
   # TODO: Find a smarter solution that doesn't require TopScope Variables
   $magic_hostgroup = get_magicvar($::icinga_hostgrouplogic)
 
-  if ($automatic_host) {
+  if ($bool_automatic_host) {
     icinga::host { $::fqdn:
       use         => $host_template,
       host_parent => $host_parent
@@ -36,7 +39,8 @@ class icinga::target ($host_template = 'generic-host', $host_parent = '', $autom
     undef   => '',
     default => $::icinga_baseservices_template,
   }
-  if ($automatic_services) {
+
+  if ($bool_automatic_services) {
     icinga::baseservices { $::fqdn:
       use      => 'generic-service',
       template => $baseservices_template,

@@ -210,8 +210,10 @@
 #   Alessandro Franceschi <al@lab42.it/>
 #
 class icinga (
-  # $grouplogic          = params_lookup( 'grouplogic' ),
   $extra_dir_source            = params_lookup( 'extra_dir_source' ),
+  $services_hash               = params_lookup( 'services_hash' ),
+  $hosts_hash                  = params_lookup( 'hosts_hash' ),
+  $hostgroups_hash             = params_lookup( 'hostgroups_hash' ),
   $dependencies_class          = params_lookup( 'dependencies_class' ),
   $enable_icingaweb            = params_lookup( 'enable_icingaweb' ),
   $template_icingaweb          = params_lookup( 'template_icingaweb' ),
@@ -492,6 +494,19 @@ class icinga (
   
   if $icinga::dependencies_class != '' {
     include $icinga::dependencies_class
+  }
+
+  # Create resources from hashes, if present
+  if $services_hash {
+    create_resources('icinga::service_local', $services_hash)
+  }
+
+  if $hosts_hash {
+    create_resources('icinga::host_local', $hosts_hash)
+  }
+
+  if $hostgroups_hash {
+    create_resources('icinga::hostgroup_local', $hostgroups_hash)
   }
 
 
