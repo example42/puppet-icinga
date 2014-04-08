@@ -14,6 +14,10 @@
 #
 class icinga::params {
 
+  $services_hash = undef
+  $hosts_hash = undef
+  $hostgroups_hash = undef
+
   $dependencies_class    = 'icinga::dependencies'
 
   ### ICINGA-WEB variables
