@@ -9,21 +9,19 @@ class icinga::repository {
        $::operatingsystem =~ /(?i:Ubuntu|Mint)/ and
        $::icinga::bool_manage_repos == true
   ) {
-    apt::repository { 'icinga-web':
-      url        => 'http://ppa.launchpad.net/formorer/icinga-web/ubuntu',
-      distro     => $::lsbdistcodename,
-      repository => 'main',
-    }
-
-    apt::repository { 'icinga':
-      url        => 'http://ppa.launchpad.net/formorer/icinga/ubuntu',
-      distro     => $::lsbdistcodename,
-      repository => 'main',
-    }
-
-    apt::key { 'icinga':
-      keyserver => 'keyserver.ubuntu.com',
-      fingerprint => '36862847',
+    apt::repository {
+      'icinga-web':
+        url        => 'http://ppa.launchpad.net/formorer/icinga-web/ubuntu',
+        distro     => $::lsbdistcodename,
+        repository => 'main',
+        keyserver  => 'keyserver.ubuntu.com',
+        key        => '36862847';
+      'icinga':
+        url        => 'http://ppa.launchpad.net/formorer/icinga/ubuntu',
+        distro     => $::lsbdistcodename,
+        repository => 'main',
+        keyserver  => 'keyserver.ubuntu.com',
+        key        => '36862847';
     }
   }
 
