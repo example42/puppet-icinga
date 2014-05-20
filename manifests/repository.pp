@@ -9,18 +9,15 @@ class icinga::repository {
        $::operatingsystem =~ /(?i:Ubuntu|Mint)/ and
        $::icinga::bool_manage_repos == true
   ) {
-    # The repos as suggested by icinga:
-    # https://wiki.icinga.org/display/howtos/Setting+up+Icinga+Web+on+Ubuntu
-    #
     apt::repository { 'icinga-web':
       url        => 'http://ppa.launchpad.net/formorer/icinga-web/ubuntu',
-      distro     => 'precise',
+      distro     => $::lsbdistcodename,
       repository => 'main',
     }
 
     apt::repository { 'icinga':
       url        => 'http://ppa.launchpad.net/formorer/icinga/ubuntu',
-      distro     => 'precise',
+      distro     => $::lsbdistcodename,
       repository => 'main',
     }
 
