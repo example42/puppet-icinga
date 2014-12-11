@@ -7,7 +7,7 @@
 # Usage:
 # include icinga::target
 #
-class icinga::target ($host_template = 'generic-host', $host_parent = '', $automatic_host = true, $automatic_services = true) {
+class icinga::target ($host_template = 'generic-host', $host_parent = '', $automatic_host = true, $automatic_services = true, $baseservices_template = $::icinga_baseservices_template) {
   # This variable defines where icinga automatically generated
   # files are places. This MUST be the same of $::icinga::customconfigdir
   # HINT: Do not mess with default path names...
@@ -35,15 +35,15 @@ class icinga::target ($host_template = 'generic-host', $host_parent = '', $autom
     }
   }
 
-  $baseservices_template = $::icinga_baseservices_template ? {
+  $real_baseservices_template = $baseservices_template ? {
     undef   => '',
-    default => $::icinga_baseservices_template,
+    default => $baseservices_template,
   }
 
   if ($bool_automatic_services) {
     icinga::baseservices { $::fqdn:
       use      => 'generic-service',
-      template => $baseservices_template,
+      template => $real_baseservices_template,
     }
   }
 

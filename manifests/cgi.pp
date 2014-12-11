@@ -1,4 +1,4 @@
-class icinga::cgi {
+class icinga::cgi ( $apache_service = 'apache' ) {
   require icinga
 
   package { 'icinga-gui':
@@ -11,7 +11,7 @@ class icinga::cgi {
   file { $icinga::apache_icingacgi_config:
     ensure => link,
     target => $icinga::apache_icingacgi_target,
-    notify => Service['apache']
+    notify => Service[$apache_service]
   }
 
 }
