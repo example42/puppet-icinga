@@ -1,3 +1,4 @@
+#
 class icinga::cgi ( $apache_service = 'apache' ) {
   require icinga
 

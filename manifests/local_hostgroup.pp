@@ -1,7 +1,7 @@
 # Define icinga::hostgroup
 #
 #
-define icinga::hostgroup (
+define icinga::local_hostgroup (
   $members,
   $alias_name    = $name,
   $ensure        = 'present',

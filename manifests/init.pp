@@ -409,18 +409,18 @@ class icinga (
   }
 
   package { 'icinga':
-    ensure => $icinga::manage_package,
-    name   => $icinga::package,
+    ensure  => $icinga::manage_package,
+    name    => $icinga::package,
     require => Class['icinga::repository'],
   }
 
   service { 'icinga':
-    ensure     => $icinga::manage_service_ensure,
-    name       => $icinga::service,
-    enable     => $icinga::manage_service_enable,
-    hasstatus  => $icinga::service_status,
-    pattern    => $icinga::process,
-    require    => [ Package['icinga'] , Class['icinga::skel'] ] ,
+    ensure    => $icinga::manage_service_ensure,
+    name      => $icinga::service,
+    enable    => $icinga::manage_service_enable,
+    hasstatus => $icinga::service_status,
+    pattern   => $icinga::process,
+    require   => [ Package['icinga'] , Class['icinga::skel'] ] ,
   }
 
   file { 'icinga.conf':

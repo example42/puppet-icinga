@@ -1,3 +1,4 @@
+#
 class icinga::hostgroup_setup {
 
   exec { 'hostgroups_build':

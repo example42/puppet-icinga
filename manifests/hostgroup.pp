@@ -16,10 +16,10 @@ define icinga::hostgroup (
   ) {
 
   @@file { "icinga-hostgroup-member-${name}":
-    ensure  => $ensure,
-    path    => "${icinga::target::hostgroupsbuilddir}/${hostgroup},${name}",
-    notify  => Exec['hostgroups_build'],
-    tag     => "icinga_hostgroup_${icinga::target::magic_hostgroup}",
+    ensure => $ensure,
+    path   => "${icinga::target::hostgroupsbuilddir}/${hostgroup},${name}",
+    notify => Exec['hostgroups_build'],
+    tag    => "icinga_hostgroup_${icinga::target::magic_hostgroup}",
   }
 
 }

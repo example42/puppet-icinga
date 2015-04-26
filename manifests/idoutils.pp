@@ -13,10 +13,10 @@ class icinga::idoutils {
   }
 
   service { 'ido2db':
-    ensure     => $icinga::manage_service_ensure,
-    enable     => $icinga::manage_service_enable,
-    hasstatus  => $icinga::service_status,
-    require    => [ Package['icinga-idoutils'] ] ,
+    ensure    => $icinga::manage_service_ensure,
+    enable    => $icinga::manage_service_enable,
+    hasstatus => $icinga::service_status,
+    require   => [ Package['icinga-idoutils'] ] ,
   }
 
   file { 'ido2db.cfg':
