@@ -7,6 +7,7 @@ fixtures:
     "concat": "git://github.com/example42/puppet-concat.git"
     "nrpe": "git://github.com/example42/puppet-nrpe.git"
     "apache": "git://github.com/example42/puppet-apache.git"
+    "stdlib": "git://github.com/puppetlabs/puppetlabs-stdlib.git"
   symlinks:
     "icinga": "#{source_dir}"
 
