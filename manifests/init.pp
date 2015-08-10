@@ -497,15 +497,15 @@ class icinga (
   }
 
   # Create resources from hashes, if present
-  if $services_hash {
+  if ! $services_hash == undef {
     create_resources('icinga::service_local', $services_hash)
   }
 
-  if $hosts_hash {
+  if ! $hosts_hash == undef {
     create_resources('icinga::host_local', $hosts_hash)
   }
 
-  if $hostgroups_hash {
+  if ! $hostgroups_hash == undef {
     create_resources('icinga::hostgroup_local', $hostgroups_hash)
   }
 
@@ -566,7 +566,7 @@ class icinga (
   # The idoutils installer configures a database user that we
   # blatantly override. Hence this order definition
   if($icinga::bool_enable_icingaweb == true and $icinga::bool_enable_idoutils == true) {
-    Class ['::icinga::idoutils'] -> Class ['::icinga::web']
+    Class['::icinga::idoutils'] -> Class['::icinga::web']
   }
 
   ### ICINGACGI Installation

@@ -54,7 +54,7 @@ describe 'icinga' do
     it 'should not enable at boot Service[icinga]' do should contain_service('icinga').with_enable('false') end
     it { should contain_file('icinga.conf').with_ensure('present') }
     it 'should not monitor the process' do
-      should contain_monitir__process('icinga_process').with_enable(false)
+      should contain_monitor__process('icinga_process').with_enable(false)
     end
   end
 
@@ -144,28 +144,28 @@ describe 'icinga' do
   end
 
   describe 'Test params lookup' do
-    let(:facts) { { :monitor => true , :ipaddress => '10.42.42.42' } }
+    let(:facts) { { :monitor => true , :ipaddress => '10.42.42.42', :operatingsystem => 'CentOS' } }
     it 'should honour top scope global vars' do
       should contain_monitor__process('icinga_process').with_enable(true)
     end
   end
 
   describe 'Test params lookup' do
-    let(:facts) { { :icinga_monitor => true , :ipaddress => '10.42.42.42' } }
+    let(:facts) { { :icinga_monitor => true , :ipaddress => '10.42.42.42', :operatingsystem => 'CentOS' } }
     it 'should honour module specific vars' do
       should contain_monitor__process('icinga_process').with_enable(true)
     end
   end
 
   describe 'Test params lookup' do
-    let(:facts) { { :monitor => false , :icinga_monitor => true , :ipaddress => '10.42.42.42' } }
+    let(:facts) { { :monitor => false , :icinga_monitor => true , :ipaddress => '10.42.42.42', :operatingsystem => 'CentOS' } }
     it 'should honour top scope module specific over global vars' do
       should contain_monitor__process('icinga_process').with_enable(true)
     end
   end
 
   describe 'Test params lookup' do
-    let(:facts) { { :monitor => false , :ipaddress => '10.42.42.42' } }
+    let(:facts) { { :monitor => false , :ipaddress => '10.42.42.42', :operatingsystem => 'CentOS' } }
     let(:params) { { :monitor => true } }
 
     it 'should honour passed params over global vars' do
