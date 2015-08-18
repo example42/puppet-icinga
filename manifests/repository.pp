@@ -22,7 +22,7 @@ class icinga::repository {
       repository => 'main',
       keyserver  => 'keyserver.ubuntu.com',
       key        => '36862847',
-    } 
+    }
   }
 
   if ( $::icinga::bool_enable_debian_repo_legacy == true or

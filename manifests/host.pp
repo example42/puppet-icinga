@@ -28,10 +28,10 @@ define icinga::host (
     'concat': {
       if $ensure == 'present' {
         @@concat { "${icinga::target::customconfigdir}/hosts/${name}.cfg":
-          owner   => 'root',
-          group   => 'root',
-          mode    => '0644',
-          tag     => "icinga_check_${icinga::target::magic_tag}",
+          owner => 'root',
+          group => 'root',
+          mode  => '0644',
+          tag   => "icinga_check_${icinga::target::magic_tag}",
         }
         @@concat::fragment { "icinga-${name}":
           target  => "${icinga::target::customconfigdir}/hosts/${name}.cfg",
